@@ -12,7 +12,7 @@ class Thrift < Formula
   end
 
   head do
-    url "https://git-wip-us.apache.org/repos/asf/thrift.git"
+    url "https://github.com/apache/thrift.git"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
@@ -76,9 +76,10 @@ class Thrift < Formula
   def caveats; <<~EOS
     To install Ruby binding:
       gem install thrift
-
-    To install PHP extension for e.g. PHP 5.5:
-      brew install homebrew/php/php55-thrift
   EOS
+  end
+
+  test do
+    system "#{bin}/thrift", "--version"
   end
 end

@@ -5,18 +5,18 @@ class Hadolint < Formula
 
   desc "Smarter Dockerfile linter to validate best practices"
   homepage "https://github.com/hadolint/hadolint"
-  url "https://github.com/hadolint/hadolint/archive/v1.5.0.tar.gz"
-  sha256 "ea67439c3b785219905a24e9c66185ebaabbfb6cc0a088142d93f34bb30e61b5"
+  url "https://github.com/hadolint/hadolint/archive/v1.11.0.tar.gz"
+  sha256 "6e637d2e9aad973388183db4e8dc604cdc18c55fcf7271b86296219da08b80a1"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "421424b317e3b85d1dda24ee6897dcdda4de4297ad42d3709cecc1f4b643fa0e" => :high_sierra
-    sha256 "4d4b119e0876a0c31397b26b784d525f456d3a119deb3178b3a53ca9d5fd7561" => :sierra
-    sha256 "733445a8e4b549a0531c278853ade0a63fd3f992cee472142d38539f7b6ace9e" => :el_capitan
+    sha256 "116faa9245d892ea1c0b112541cac7966479ab23c2b132fa202234c47279b2e3" => :high_sierra
+    sha256 "1076f053ad0b0d78cb61fad472fd3fefa68e57094bd24c490e3c86f9d771c220" => :sierra
+    sha256 "59353b788d3c884c0845bc7812fb2b7155cb1ac186d4374c5da7dd08296c8a64" => :el_capitan
   end
 
-  depends_on "ghc" => :build
   depends_on "cabal-install" => :build
+  depends_on "ghc" => :build
 
   def install
     cabal_sandbox do

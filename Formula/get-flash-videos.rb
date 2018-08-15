@@ -1,14 +1,14 @@
 class GetFlashVideos < Formula
   desc "Download or play videos from various Flash-based websites"
   homepage "https://github.com/monsieurvideo/get-flash-videos"
-  url "https://github.com/monsieurvideo/get-flash-videos/archive/1.25.99.tar.gz"
-  sha256 "ffb6547f9bb0565031eb2a62c4702fc467f20464b12aec5747f5c5f0e506d9dd"
+  url "https://github.com/monsieurvideo/get-flash-videos/archive/1.25.99.03.tar.gz"
+  sha256 "37267b41c7b0c240d99ed1f5e7ba04d00f98a8daff82ac9edd2b12c3bca83d73"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "2f05ffabed392a613bbf1f6dbfe6768143a0beaa90563813d5bf64f41fbae8d0" => :high_sierra
-    sha256 "e33b1482d4054116f4d467c693b515b15f2de3e3746c0247aed7d521f9315804" => :sierra
-    sha256 "3e940c869b6dae6288a60c18017726f455268c08a9ddaf52ead795a5e7852faf" => :el_capitan
+    sha256 "10e25788bbd00ffd0f0a5281c9c4c493c2957947ba4690cf92460c98aa72dc1b" => :high_sierra
+    sha256 "6c6e60aff2308881f4ef896b5a5c2dd1b05db9146d224be024793f042534dc6d" => :sierra
+    sha256 "0b7edca9b6518af848a6cb5f84bb34014cd017391279398ea9d796dc89ea7a57" => :el_capitan
   end
 
   depends_on "rtmpdump"
@@ -29,8 +29,8 @@ class GetFlashVideos < Formula
   end
 
   resource "WWW::Mechanize" do
-    url "https://cpan.metacpan.org/authors/id/O/OA/OALDERS/WWW-Mechanize-1.87.tar.gz"
-    sha256 "819342a55cdaaf742e8511ecf72c7764b71789f4d1ef0eb6f4b4db4361f3b9cf"
+    url "https://cpan.metacpan.org/authors/id/O/OA/OALDERS/WWW-Mechanize-1.88.tar.gz"
+    sha256 "36d97e778ab911ab5a762d551541686cbf3463c571f474322f7b5da77f50a879"
   end
 
   resource "Term::ProgressBar" do
