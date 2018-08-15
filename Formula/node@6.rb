@@ -1,15 +1,13 @@
 class NodeAT6 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v6.13.0/node-v6.13.0.tar.xz"
-  sha256 "b7166fe2c6b29fbaa5a81c6953dc6764a91966ac00d746581fad66ddb1bb4d04"
-  head "https://github.com/nodejs/node.git", :branch => "v6.x-staging"
+  url "https://nodejs.org/dist/v6.14.3/node-v6.14.3.tar.xz"
+  sha256 "e3f187729f7e4b13d9c053f70cc12717d6e6734e0544cb8ba935aa72d07479c9"
 
   bottle do
-    rebuild 2
-    sha256 "0b37f5dd42ed7736580473140f4ae767d33f349c6d64f8a83d01f5ce388b2a2d" => :high_sierra
-    sha256 "70ac01d90ed6b3997c74793e45bd24ee4d7cfcf27a2305b1b26841e02f260f4c" => :sierra
-    sha256 "233c27e2a389b8b410cce0616ac059bed418975a174cbff0917fb54550953654" => :el_capitan
+    sha256 "f291232380137e55151587da07e54b7e504d1889446bb8d6c96774bfe36b1e00" => :high_sierra
+    sha256 "2d2b43ae66e12155c635b8dbecb7cc03caec5bf28e56631760f38c1d2cfc2517" => :sierra
+    sha256 "4898795a16c7036ffa0819424f92e32dc9a5ed1f66a47de04aac6f8c6c6dbc96" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -20,7 +18,7 @@ class NodeAT6 < Formula
   option "without-completion", "npm bash completion will not be installed"
   option "with-full-icu", "Build with full-icu (all locales) instead of small-icu (English only)"
 
-  depends_on "python@2" => :build if MacOS.version <= :snow_leopard
+  depends_on "python@2" => :build
   depends_on "pkg-config" => :build
   depends_on "openssl" => :optional
 
@@ -34,7 +32,6 @@ class NodeAT6 < Formula
 
   resource "icu4c" do
     url "https://ssl.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz"
-    mirror "https://fossies.org/linux/misc/icu4c-58_2-src.tgz"
     version "58.2"
     sha256 "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
   end
@@ -52,6 +49,11 @@ class NodeAT6 < Formula
 
     system "./configure", *args
     system "make", "install"
+  end
+
+  def post_install
+    return if build.without? "npm"
+    (lib/"node_modules/npm/npmrc").atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
   end
 
   def caveats
@@ -100,7 +102,7 @@ class NodeAT6 < Formula
       assert_predicate bin/"npm", :executable?, "npm must be executable"
       npm_args = ["-ddd", "--cache=#{HOMEBREW_CACHE}/npm_cache", "--build-from-source"]
       system "#{bin}/npm", *npm_args, "install", "npm@latest"
-      system "#{bin}/npm", *npm_args, "install", "bignum" unless head?
+      system "#{bin}/npm", *npm_args, "install", "bignum"
     end
   end
 end

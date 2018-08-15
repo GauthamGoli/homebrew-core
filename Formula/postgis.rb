@@ -1,15 +1,15 @@
 class Postgis < Formula
   desc "Adds support for geographic objects to PostgreSQL"
   homepage "https://postgis.net/"
-  url "https://download.osgeo.org/postgis/source/postgis-2.4.3.tar.gz"
-  sha256 "ea5374c5db6b645ba5628ddcb08f71d3b3d90a464d366b4e1d20d5a268bde4b9"
+  url "https://download.osgeo.org/postgis/source/postgis-2.4.4.tar.gz"
+  sha256 "0663efb589210d5048d95c817e5cf29552ec8180e16d4c6ef56c94255faca8c2"
   revision 1
 
   bottle do
     cellar :any
-    sha256 "fbed2b89a7d387e0daf26a706ac59fc461494cf14e207f57730bd6ee12f1cb79" => :high_sierra
-    sha256 "3f8c3abc7e8e1a37591cb15881499559370ad4d8b91b9954aa7ebbaeebb3572f" => :sierra
-    sha256 "422cb06464cab2d785684c743e57c2f25ad14a36b62dc63e20e45a5d605bca6f" => :el_capitan
+    sha256 "39ca73e792f68197d9c7543300cfea6a36326c4ced5ac5b1f46484dbffad8fd2" => :high_sierra
+    sha256 "7d4bb0d80a5a7221815514b10781d021901b489cb405b02b0d0975661ea0a348" => :sierra
+    sha256 "2bb8047b0735acf4bec62f60aad084cf7b32a1e426d7def2dc00d8591030f46d" => :el_capitan
   end
 
   head do
@@ -133,7 +133,7 @@ class Postgis < Formula
         #{HOMEBREW_PREFIX}/lib
       PostGIS extension modules installed to:
         #{HOMEBREW_PREFIX}/share/postgresql/extension
-      EOS
+    EOS
   end
 
   test do

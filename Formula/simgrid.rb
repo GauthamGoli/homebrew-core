@@ -1,14 +1,13 @@
 class Simgrid < Formula
   desc "Studies behavior of large-scale distributed systems"
   homepage "http://simgrid.gforge.inria.fr"
-  url "https://gforge.inria.fr/frs/download.php/file/37294/SimGrid-3.18.tar.gz"
-  sha256 "dc8f6223d89326b6a21c99eabc90598fa153d6b0818a63ff5c3ec8726e2257b2"
-  revision 2
+  url "https://gforge.inria.fr/frs/download.php/file/37602/SimGrid-3.20.tar.gz"
+  sha256 "4d4757eb45d87cf18d990d589c31d223b0ea8cf6fcd8c94fca4d38162193cef6"
 
   bottle do
-    sha256 "5b87d86d1b0cb0a409e55950cb4c4804525171b9b8f93b3363071b9785662e55" => :high_sierra
-    sha256 "16252791fbb83e6dc131a363a0be011fdd963aae83258d0ebddb657bd3a010ef" => :sierra
-    sha256 "b78374d8e250b55fa80fefa9266ac844b5c309cc3697867956dd57cf07ca43bd" => :el_capitan
+    sha256 "75ce382a395f963425946d7f53361fa1143a2b6ca9292c63193e76139bcef91e" => :high_sierra
+    sha256 "58895cb0aed9235972377d2460a18c8bc03203212ae8246450c429e837a01bcf" => :sierra
+    sha256 "c0a6cf0fba37da1c281cac508bdde38aa4145fe7c50bcc9f466f5521cf95d722" => :el_capitan
   end
 
   depends_on "cmake" => :build

@@ -1,22 +1,21 @@
 class Offlineimap < Formula
   desc "Synchronizes emails between two repositories"
   homepage "https://www.offlineimap.org/"
-  url "https://github.com/OfflineIMAP/offlineimap/archive/v7.1.5.tar.gz"
-  sha256 "8e28e786a00768e8a97d9f049406744829212cffb69903ffbb15faa1479d43e1"
-  revision 1
+  url "https://github.com/OfflineIMAP/offlineimap/archive/v7.2.1.tar.gz"
+  sha256 "1d4164941413234cf4669ae57d27176701a7e07214fe49fa265df5c085eb4280"
   head "https://github.com/OfflineIMAP/offlineimap.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "c615f6e362d917f70b3a5c2bddd48cef93c0ff9c1de1195634dc44f8f1aaa20e" => :high_sierra
-    sha256 "c615f6e362d917f70b3a5c2bddd48cef93c0ff9c1de1195634dc44f8f1aaa20e" => :sierra
-    sha256 "c615f6e362d917f70b3a5c2bddd48cef93c0ff9c1de1195634dc44f8f1aaa20e" => :el_capitan
+    sha256 "7156fab97be5a48067ca0c0ff713bc283fc0f1542f00842ed214d2cdbd54d7d3" => :high_sierra
+    sha256 "7156fab97be5a48067ca0c0ff713bc283fc0f1542f00842ed214d2cdbd54d7d3" => :sierra
+    sha256 "7156fab97be5a48067ca0c0ff713bc283fc0f1542f00842ed214d2cdbd54d7d3" => :el_capitan
   end
 
   depends_on "asciidoc" => :build
   depends_on "docbook-xsl" => :build
   depends_on "sphinx-doc" => :build
-  depends_on "python@2" if MacOS.version <= :snow_leopard
+  depends_on "python@2"
 
   resource "six" do
     url "https://files.pythonhosted.org/packages/16/d8/bc6316cf98419719bd59c91742194c111b6f2e85abac88e496adefaf7afe/six-1.11.0.tar.gz"
@@ -28,9 +27,6 @@ class Offlineimap < Formula
     system "make", "docs"
     man1.install "docs/offlineimap.1"
     man7.install "docs/offlineimapui.7"
-
-    inreplace ["offlineimap/bundled_imaplib2.py", "bin/offlineimap"],
-              %r{^#!/usr/bin/env python$}, "#!/usr/bin/python"
 
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
     resource("six").stage do
@@ -50,7 +46,7 @@ class Offlineimap < Formula
 
     * advanced configuration:
         cp -n #{etc}/offlineimap.conf ~/.offlineimaprc
-    EOS
+  EOS
   end
 
   plist_options :manual => "offlineimap"
@@ -86,7 +82,7 @@ class Offlineimap < Formula
         <string>/dev/null</string>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

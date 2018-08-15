@@ -1,15 +1,14 @@
 class Libmagic < Formula
   desc "Implementation of the file(1) command"
   homepage "https://www.darwinsys.com/file/"
-  url "ftp://ftp.astron.com/pub/file/file-5.32.tar.gz"
-  mirror "https://fossies.org/linux/misc/file-5.32.tar.gz"
-  sha256 "8639dc4d1b21e232285cd483604afc4a6ee810710e00e579dbe9591681722b50"
+  url "ftp://ftp.astron.com/pub/file/file-5.34.tar.gz"
+  mirror "https://fossies.org/linux/misc/file-5.34.tar.gz"
+  sha256 "f15a50dbbfa83fec0bd1161e8e191b092ec832720e30cd14536e044ac623b20a"
 
   bottle do
-    sha256 "f3181a7bb80610f8e0662e03ee980a03f6388c142e5b7b15eb97ad3b9b4690c9" => :high_sierra
-    sha256 "ba06b4094577d77c2d515932e0bf0f3e1481f26dd307e655d28f8fba13fa8791" => :sierra
-    sha256 "05d95e47cfa533c37fcbd4f4b54b9c9957d985d49852f397c6d78387fbe2c254" => :el_capitan
-    sha256 "d11466ebdc722d370346cecf135a925e1f482f0d0bbbb424f821347134f52e64" => :yosemite
+    sha256 "8b2bda908cc1602f73c0f3fd27fa9b9fcf037f96f3153a546bf65c3b97bf81d4" => :high_sierra
+    sha256 "ea9fe45980bde7d86785748951b6e572e51cda4b4fad94c170923ce95331bce6" => :sierra
+    sha256 "b5a77abc0e49da98e7436965824793520a06f4e5bf03f05814d96abd995ca7ea" => :el_capitan
   end
 
   deprecated_option "with-python" => "with-python@2"

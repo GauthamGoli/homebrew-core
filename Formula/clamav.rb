@@ -1,13 +1,13 @@
 class Clamav < Formula
   desc "Anti-virus software"
   homepage "https://www.clamav.net/"
-  url "https://www.clamav.net/downloads/production/clamav-0.99.4.tar.gz"
-  sha256 "d72ac3273bde8d2e5e28ec9978373ee3ab4529fd868bc3fc4d2d2671228f2461"
+  url "https://www.clamav.net/downloads/production/clamav-0.100.1.tar.gz"
+  sha256 "84e026655152247de7237184ee13003701c40be030dd68e0316111049f58a59f"
 
   bottle do
-    sha256 "d5146acf7afe62f40ceffa44234817d277b1f5ee17971d2be1033c57a8c09637" => :high_sierra
-    sha256 "e2f7599ca651902b33941333765154588cf4598601704035dada3d463eb5df7f" => :sierra
-    sha256 "8288f881dfe8a42c7adaf566a76d19152f9adda6c01f38e3ca2efa44d1fe3fc6" => :el_capitan
+    sha256 "01d73f961206740c56c70f0682750afce0a8e58c0c1d746f5bf835a920b5c3f2" => :high_sierra
+    sha256 "70dbccd41202356227aed9f9a0bf0f71267170e49ed65027f4b7675af9ccb2a1" => :sierra
+    sha256 "221ea32abe28214329b3fb04c4501f21782de5053e9f38badcfbdacde2643fd4" => :el_capitan
   end
 
   head do
@@ -38,7 +38,7 @@ class Clamav < Formula
       --enable-llvm=no
     ]
 
-    args << "--with-libjson=#{Formula["json-c"].opt_prefix}" if build.with? "json-c"
+    args << (build.with?("json-c") ? "--with-libjson=#{Formula["json-c"].opt_prefix}" : "--without-libjson")
     args << "--with-pcre=#{Formula["pcre"].opt_prefix}" if build.with? "pcre"
     args << "--disable-yara" if build.without? "yara"
     args << "--without-pcre" if build.without? "pcre"
@@ -53,7 +53,7 @@ class Clamav < Formula
   def caveats; <<~EOS
     To finish installation & run clamav you will need to edit
     the example conf files at #{etc}/clamav/
-    EOS
+  EOS
   end
 
   test do

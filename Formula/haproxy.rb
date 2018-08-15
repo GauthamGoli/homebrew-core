@@ -1,14 +1,14 @@
 class Haproxy < Formula
   desc "Reliable, high performance TCP/HTTP load balancer"
   homepage "https://www.haproxy.org/"
-  url "https://www.haproxy.org/download/1.8/src/haproxy-1.8.4.tar.gz"
-  sha256 "e305b0a4e7dec08072841eef6ac6dcd1b5586b1eff09c2d51e152a912e8884a6"
+  url "https://www.haproxy.org/download/1.8/src/haproxy-1.8.13.tar.gz"
+  sha256 "2bf5dafbb5f1530c0e67ab63666565de948591f8e0ee2a1d3c84c45e738220f1"
 
   bottle do
     cellar :any
-    sha256 "890c93949fc751be1e81cb392bf87bbfb602f161ac275206a0053748e2b6a598" => :high_sierra
-    sha256 "d6d4d19f2364b5f9958a7e13edfd0c445ce97797b10d759948bba07feb5afbd6" => :sierra
-    sha256 "35cb705f125cd7c177b7ff8355526abcc53c918e0d69dcad9daabb5697278287" => :el_capitan
+    sha256 "de452f76eedcd1b352fe0093999d935f0f455769eb34db2804c68f40a3361c9a" => :high_sierra
+    sha256 "36f30a9e68f0cab58cc90d04534c60f218266244f6537c1393d15bb12c28426d" => :sierra
+    sha256 "e11e3a148e59529f0fe5c77d992ecfdedbaf9342aee5fae302ada9fa95231443" => :el_capitan
   end
 
   depends_on "openssl"
@@ -22,6 +22,7 @@ class Haproxy < Formula
       USE_POLL=1
       USE_PCRE=1
       USE_OPENSSL=1
+      USE_THREAD=1
       USE_ZLIB=1
       ADDLIB=-lcrypto
     ]
@@ -30,7 +31,7 @@ class Haproxy < Formula
       lua = Formula["lua"]
       args << "USE_LUA=1"
       args << "LUA_LIB=#{lua.opt_lib}"
-      args << "LUA_INC=#{lua.opt_include}"
+      args << "LUA_INC=#{lua.opt_include}/lua"
       args << "LUA_LD_FLAGS=-L#{lua.opt_lib}"
     end
 
@@ -63,7 +64,7 @@ class Haproxy < Formula
         <string>#{var}/log/haproxy.log</string>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
