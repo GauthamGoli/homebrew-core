@@ -1,28 +1,29 @@
 class Node < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v9.7.1/node-v9.7.1.tar.xz"
-  sha256 "06fae194a1eb962cc6f69f74f5be9f7c022265e7b3c3d7b08872157d02929042"
+  url "https://nodejs.org/dist/v10.8.0/node-v10.8.0.tar.xz"
+  sha256 "97bb21718228fd801c8355c842e764eefda888d3a87de8eb04315c74f546b9bc"
   head "https://github.com/nodejs/node.git"
 
   bottle do
-    sha256 "1595bb21e107e39dd36ad0e9481847def58973ca9b10703dd36fa07bfc4f587b" => :high_sierra
-    sha256 "4e950788133b160da68cb95c234dc49acea1388d74bee90d919a229bccc1fd18" => :sierra
-    sha256 "ad79f9976d2fd2383642d01184d2d6a5aee34e9ec5d86a826f175ebb78108fee" => :el_capitan
+    sha256 "5f9325b4556d4874fb8b917f1e5a9b7f6cdc224b8d683387065577dc41a6020e" => :high_sierra
+    sha256 "17d515210e284aaed53d97765a1932026dbe967304f3101f3e2d2d4b896d5ac2" => :sierra
+    sha256 "f3f9dd0a91bbd765ae4ed88d72dbedf88b3cffec4e4978e2143f7d7b20f874dd" => :el_capitan
   end
 
   option "with-debug", "Build with debugger hooks"
-  option "with-openssl", "Build against Homebrew's OpenSSL instead of the bundled OpenSSL"
+  option "with-openssl@1.1", "Build against Homebrew's OpenSSL instead of the bundled OpenSSL"
   option "without-npm", "npm will not be installed"
   option "without-completion", "npm bash completion will not be installed"
   option "without-icu4c", "Build with small-icu (English only) instead of system-icu (all locales)"
 
   deprecated_option "enable-debug" => "with-debug"
+  deprecated_option "with-openssl" => "with-openssl@1.1"
 
-  depends_on "python@2" => :build if MacOS.version <= :snow_leopard
+  depends_on "python@2" => :build
   depends_on "pkg-config" => :build
   depends_on "icu4c" => :recommended
-  depends_on "openssl" => :optional
+  depends_on "openssl@1.1" => :optional
 
   # Per upstream - "Need g++ 4.8 or clang++ 3.4".
   fails_with :clang if MacOS.version <= :snow_leopard
@@ -35,8 +36,8 @@ class Node < Formula
   # We track major/minor from upstream Node releases.
   # We will accept *important* npm patch releases when necessary.
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-5.6.0.tgz"
-    sha256 "b1f0de3767136c1d7b4b0f10e6eb2fb3397e2fe11e4c9cddcd0030ad1af9eddd"
+    url "https://registry.npmjs.org/npm/-/npm-6.2.0.tgz"
+    sha256 "c40214b4181c50f8390c6c5a692438381054bf319062a36ef52f540599b1935f"
   end
 
   def install
@@ -45,7 +46,7 @@ class Node < Formula
     args = %W[--prefix=#{prefix} --without-npm]
     args << "--debug" if build.with? "debug"
     args << "--with-intl=system-icu" if build.with? "icu4c"
-    args << "--shared-openssl" if build.with? "openssl"
+    args << "--shared-openssl" << "--openssl-use-def-ca-store" if build.with? "openssl@1.1"
     args << "--tag=head" if build.head?
 
     system "./configure", *args
@@ -100,9 +101,7 @@ class Node < Formula
       cp Dir[libexec/"lib/node_modules/npm/man/#{man}/{npm,package.json,npx}*"], HOMEBREW_PREFIX/"share/man/#{man}"
     end
 
-    npm_root = node_modules/"npm"
-    npmrc = npm_root/"npmrc"
-    npmrc.atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
+    (node_modules/"npm/npmrc").atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
   end
 
   def caveats
@@ -137,7 +136,7 @@ class Node < Formula
       assert_predicate HOMEBREW_PREFIX/"bin/npm", :executable?, "npm must be executable"
       npm_args = ["-ddd", "--cache=#{HOMEBREW_CACHE}/npm_cache", "--build-from-source"]
       system "#{HOMEBREW_PREFIX}/bin/npm", *npm_args, "install", "npm@latest"
-      system "#{HOMEBREW_PREFIX}/bin/npm", *npm_args, "install", "bignum" unless head?
+      system "#{HOMEBREW_PREFIX}/bin/npm", *npm_args, "install", "bufferutil" unless head?
       assert_predicate HOMEBREW_PREFIX/"bin/npx", :exist?, "npx must exist"
       assert_predicate HOMEBREW_PREFIX/"bin/npx", :executable?, "npx must be executable"
       assert_match "< hello >", shell_output("#{HOMEBREW_PREFIX}/bin/npx cowsay hello")

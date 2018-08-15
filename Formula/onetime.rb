@@ -1,9 +1,10 @@
 class Onetime < Formula
   desc "Encryption with one-time pads"
-  homepage "http://red-bean.com/onetime/"
+  homepage "https://www.red-bean.com/onetime/"
+  revision 1
 
   stable do
-    url "http://red-bean.com/onetime/onetime-1.81.tar.gz"
+    url "https://www.red-bean.com/onetime/onetime-1.81.tar.gz"
     sha256 "36a83a83ac9f4018278bf48e868af00f3326b853229fae7e43b38d167e628348"
 
     # Fixes the Makefile to permit destination specification
@@ -22,16 +23,13 @@ class Onetime < Formula
 
   bottle do
     cellar :any_skip_relocation
-    rebuild 2
-    sha256 "45ada732e4c0b19f46fe618300da803cbffe4c1c8ff3111cd9547dda3c371958" => :high_sierra
-    sha256 "37cf417291ce11a6313bde209490f3cce0ca5f47b17579e28720568088de89fa" => :sierra
-    sha256 "4d27502d9a4b8d257182dcaf99b05121033352928c3716a1ebe932a24276e73a" => :el_capitan
-    sha256 "561f129baa60ba8aa08f47130a35f531fdd7ddda80c3e0636bd39c96c3d06930" => :yosemite
-    sha256 "31698cc41c95bdb23f340f2641124826f8b5324a69ce338146e7c01800646fa5" => :mavericks
+    sha256 "9f73f9cdb465fce1aefc3cf80c00bc8e43b41a33c3e999fb3ec531251cfc3da0" => :high_sierra
+    sha256 "9f73f9cdb465fce1aefc3cf80c00bc8e43b41a33c3e999fb3ec531251cfc3da0" => :sierra
+    sha256 "9f73f9cdb465fce1aefc3cf80c00bc8e43b41a33c3e999fb3ec531251cfc3da0" => :el_capitan
   end
 
   devel do
-    url "http://red-bean.com/onetime/onetime-2.0-beta13.tar.gz"
+    url "https://www.red-bean.com/onetime/onetime-2.0-beta13.tar.gz"
     # FIXME: I can't rememeber why the custom version was added now, but
     # we're stuck with it now as 2.0-beta(n) is "less" than 2.0.0(n).
     version "2.0.13"
@@ -40,6 +38,7 @@ class Onetime < Formula
 
   def install
     system "make", "prefix=#{prefix}", "install"
+    inreplace bin/"onetime", %r{^#!/usr/bin/env python$}, "#!/usr/bin/python"
   end
 
   test do

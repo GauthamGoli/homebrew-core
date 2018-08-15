@@ -1,26 +1,16 @@
 class Wxmac < Formula
   desc "Cross-platform C++ GUI toolkit (wxWidgets for macOS)"
   homepage "https://www.wxwidgets.org"
-  url "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.3.1/wxWidgets-3.0.3.1.tar.bz2"
-  sha256 "3164ad6bc5f61c48d2185b39065ddbe44283eb834a5f62beb13f1d0923e366e4"
+  url "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.4/wxWidgets-3.0.4.tar.bz2"
+  sha256 "96157f988d261b7368e5340afa1a0cad943768f35929c22841f62c25b17bf7f0"
   revision 1
   head "https://github.com/wxWidgets/wxWidgets.git"
 
   bottle do
     cellar :any
-    sha256 "897ef07ebe51ba7f2fb0bc54df04a68814ce4d55afe1e8808fd5c6df6a811eca" => :high_sierra
-    sha256 "fb15ea55d8393fafa1c286485fc8c1da91b3f41d76a234d9766689cfe4635e1e" => :sierra
-    sha256 "b26fa72e62558efa45fc89a4cc9cea74845369764e74fffa339b3f9eb6549827" => :el_capitan
-    sha256 "591bffb395156566ef3e55a9a8f2c193bdcde8b941d42cc6e6b41833ceeeaba2" => :yosemite
-  end
-
-  stable do
-    # Fix compilation on High Sierra
-    # https://trac.wxwidgets.org/ticket/17929#ticket
-    patch do
-      url "https://github.com/wxWidgets/wxWidgets/commit/9a610eadcfe.patch?full_index=1"
-      sha256 "b445ddf1331b8ec21790b7e3fe3ac6059a2548002e7cbb9bf22b597baf32e3bf"
-    end
+    sha256 "32357b2ab1590b209e89c02fd36c54b5378fe79d32e82abc4047ab4fbae2663c" => :high_sierra
+    sha256 "666f423fdee434b4e4f91d6035678f658cf149df8077dae01151c0ebe781445a" => :sierra
+    sha256 "6acfa572e370c0f9c2f48f89ab8807a42d81726151e8ebddccca48aa634514de" => :el_capitan
   end
 
   devel do
@@ -58,9 +48,6 @@ class Wxmac < Formula
       "--disable-precomp-headers",
       # This is the default option, but be explicit
       "--disable-monolithic",
-      # Enabling mediactrl leads to wxconfig trying to pull in a non-existent
-      # 64-bit QuickTime framework: https://trac.wxwidgets.org/ticket/17639
-      "--disable-mediactrl",
       # Set with-macosx-version-min to avoid configure defaulting to 10.5
       "--with-macosx-version-min=#{MacOS.version}",
     ]

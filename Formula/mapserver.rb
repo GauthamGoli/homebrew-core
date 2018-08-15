@@ -1,15 +1,15 @@
 class Mapserver < Formula
   desc "Publish spatial data and interactive mapping apps to the web"
-  homepage "http://mapserver.org/"
+  homepage "https://mapserver.org/"
   url "https://download.osgeo.org/mapserver/mapserver-7.0.7.tar.gz"
   sha256 "37a8c3008328bae0fea05109d6d544a3284f756a23956e8a2f5ec10a6b5fef67"
-  revision 1
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "bc574e4eef7bb4bba5a30da2b176d9c834fd7fffaafb07ee7f7ac2694c95fd59" => :high_sierra
-    sha256 "16dc614cf8972ac732509c193176b71a7ded79637df5361646df306a1fc66ec1" => :sierra
-    sha256 "02388357fd386a933901fef592feacd3d75c7b86f1c2e45efa31c3e08a5c5341" => :el_capitan
+    sha256 "861890728eb6d3fb016b9b820f301da7f79136f454820ef8d3eb1387711f8df3" => :high_sierra
+    sha256 "00e9069aba52817cbd8e27ee77113bdfd4f4ac3f0fc6fb89f16b8ae451e53fda" => :sierra
+    sha256 "e1c69d346d18201436a8afdbc40e7ef0b0e6ed80ec8ac47eba6ac5e04f65af8e" => :el_capitan
   end
 
   option "with-fastcgi", "Build with fastcgi support"
@@ -47,7 +47,7 @@ class Mapserver < Formula
       -DWITH_WFS=ON
       -DWITH_FRIBIDI=OFF
       -DWITH_HARFBUZZ=OFF
-      -DPYTHON_EXECUTABLE:FILEPATH=#{which("python")}
+      -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
     ]
 
     # Install within our sandbox.
@@ -105,11 +105,11 @@ class Mapserver < Formula
         extension="#{opt_lib}/php/extensions/php_mapscript.so"
       * Execute "php -m"
       * You should see MapScript in the module list
-    EOS
+  EOS
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/mapserv -v")
-    system "python", "-c", "import mapscript"
+    system "python2.7", "-c", "import mapscript"
   end
 end

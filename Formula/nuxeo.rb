@@ -1,8 +1,8 @@
 class Nuxeo < Formula
   desc "Enterprise Content Management"
   homepage "https://nuxeo.github.io/"
-  url "https://cdn.nuxeo.com/nuxeo-9.10/nuxeo-server-9.10-tomcat.zip"
-  sha256 "b0d70c28c1a01cf43a9598245f6ff2aaf71b42dad7ff9ce29fe51d3b17736642"
+  url "https://cdn.nuxeo.com/nuxeo-10.2/nuxeo-server-10.2-tomcat.zip"
+  sha256 "fae0ab64c13f5ec0b9ff3c317f1068e8e1d5b182646710262710c13e5e97f15e"
 
   bottle :unneeded
 
@@ -42,7 +42,7 @@ class Nuxeo < Formula
     You need to edit #{etc}/nuxeo.conf file to configure manually the server.
     Also, in case of upgrade, run 'nuxeoctl mp-upgrade' to ensure all
     downloaded addons are up to date.
-    EOS
+  EOS
   end
 
   test do
