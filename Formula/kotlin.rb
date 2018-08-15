@@ -1,8 +1,8 @@
 class Kotlin < Formula
   desc "Statically typed programming language for the JVM"
   homepage "https://kotlinlang.org/"
-  url "https://github.com/JetBrains/kotlin/releases/download/v1.2.30/kotlin-compiler-1.2.30.zip"
-  sha256 "4d6965877301d44241ca6de36480140992dc8a6b1c1884baeb5239ce2c43e071"
+  url "https://github.com/JetBrains/kotlin/releases/download/v1.2.60/kotlin-compiler-1.2.60.zip"
+  sha256 "ff79f695c9be0a500d4b56a69d0b8657b3d106d78a35101e792248af904a623d"
 
   bottle :unneeded
 
@@ -10,6 +10,7 @@ class Kotlin < Formula
     libexec.install "bin", "build.txt", "lib"
     rm Dir["#{libexec}/bin/*.bat"]
     bin.install_symlink Dir["#{libexec}/bin/*"]
+    prefix.install "license"
   end
 
   test do

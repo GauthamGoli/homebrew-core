@@ -1,8 +1,8 @@
 class Metabase < Formula
   desc "Business intelligence report server"
   homepage "https://www.metabase.com/"
-  url "http://downloads.metabase.com/v0.28.1/metabase.jar"
-  sha256 "f3af2deb9f67c191f169bb4b4623440d8b324786d592203da7a7fd6d2ff163db"
+  url "http://downloads.metabase.com/v0.30.0/metabase.jar"
+  sha256 "704235308e609d618683cbfedd487978cb9d3fc86e068cb5c417771c9e68dff2"
 
   head do
     url "https://github.com/metabase/metabase.git"
@@ -56,7 +56,7 @@ class Metabase < Formula
       <string>/dev/null</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

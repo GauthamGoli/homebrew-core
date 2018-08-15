@@ -5,13 +5,13 @@ class MpsYoutube < Formula
   homepage "https://github.com/mps-youtube/mps-youtube"
   url "https://github.com/mps-youtube/mps-youtube/archive/v0.2.8.tar.gz"
   sha256 "d5f2c4bc1f57f0566242c4a0a721a5ceaa6d6d407f9d6dd29009a714a0abec74"
-  revision 1
+  revision 3
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "9230b079bce80602e9f731eafe98e05407e707e7317be2b34a8b393b416104b9" => :high_sierra
-    sha256 "c102888a9840b3c766d642d13158e8824213524e8a422a27aa16ac7c1e0c765e" => :sierra
-    sha256 "ef1fe1b556d1ee281d641e84ec22a4298d43738f3d8f3d1d9686ed6f50199ba6" => :el_capitan
+    sha256 "49813e6178f80f596316552e88c0412bff5abc3f03634112a7a870b0b12d9ff7" => :high_sierra
+    sha256 "a8395b866a3b42e7ebea186224f962cdbde3ff1058514bcce86fa9cfdaf24a6a" => :sierra
+    sha256 "295450a0d67859bb15e901c2717dbaa5edfbe76d60672f2ff662173312a63415" => :el_capitan
   end
 
   depends_on "python"

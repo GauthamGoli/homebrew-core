@@ -4,19 +4,20 @@ class Imagemagick < Formula
   # Please always keep the Homebrew mirror as the primary URL as the
   # ImageMagick site removes tarballs regularly which means we get issues
   # unnecessarily and older versions of the formula are broken.
-  url "https://dl.bintray.com/homebrew/mirror/imagemagick-7.0.7-25.tar.xz"
-  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.7-25.tar.xz"
-  sha256 "3538c33b2bb44d55ba146271e7584d79c1d2d10ab592a6efa49264ad630bf961"
+  url "https://dl.bintray.com/homebrew/mirror/imagemagick--7.0.8-10.tar.xz"
+  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.8-10.tar.xz"
+  sha256 "d5309031d59130befa283266011efaab15b1e113f1a218a4ba24c821cd906472"
   head "https://github.com/ImageMagick/ImageMagick.git"
 
   bottle do
-    sha256 "428604148b0f6d3d11d33f3a6fbde37cd8babb6e20fb0c89a9aa96bde9494624" => :high_sierra
-    sha256 "b80f639082f2c6598ba5a34d1699cc189481e590b2e34e67135e21d37c3b6418" => :sierra
-    sha256 "3de02b4553ec8e05e75c0e4c23d1c78096acf7e47e90e4ff5828c595d5433277" => :el_capitan
+    sha256 "7489a9423b811b921a4f37eedc6d44f55f66d4371e81a51c1a343a9d8994b238" => :high_sierra
+    sha256 "0d17ce98dbcfef581287cf5db9acb05ee186e2143260a3d56ba5b7ff4d858625" => :sierra
+    sha256 "534863b26eb4ff97ab5039ec6808bb9ea57aff7ecf4d0523446159c07afd5d39" => :el_capitan
   end
 
   option "with-fftw", "Compile with FFTW support"
   option "with-hdri", "Compile with HDRI support"
+  option "with-libheif", "Compile with HEIF support"
   option "with-opencl", "Compile with OpenCL support"
   option "with-openmp", "Compile with OpenMP support"
   option "with-perl", "Compile with PerlMagick"
@@ -28,9 +29,10 @@ class Imagemagick < Formula
   deprecated_option "enable-hdri" => "with-hdri"
   deprecated_option "with-gcc" => "with-openmp"
   deprecated_option "with-jp2" => "with-openjpeg"
+  deprecated_option "with-libde265" => "with-libheif"
 
   depends_on "pkg-config" => :build
-  depends_on "libtool" => :run
+  depends_on "libtool"
   depends_on "xz"
 
   depends_on "jpeg" => :recommended
@@ -42,6 +44,7 @@ class Imagemagick < Formula
   depends_on "fontconfig" => :optional
   depends_on "little-cms" => :optional
   depends_on "little-cms2" => :optional
+  depends_on "libheif" => :optional
   depends_on "libwmf" => :optional
   depends_on "librsvg" => :optional
   depends_on "liblqr" => :optional
