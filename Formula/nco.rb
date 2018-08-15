@@ -1,14 +1,14 @@
 class Nco < Formula
   desc "Command-line operators for netCDF and HDF files"
   homepage "https://nco.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/nco/nco-4.7.3.tar.gz"
-  sha256 "c79fcfc291976466070e0da04c9ea57924feb7f41e4d89a27f313c465e42b381"
+  url "https://downloads.sourceforge.net/project/nco/nco-4.7.6.tar.gz"
+  sha256 "c7926163b204573b7bf7b6e3c9bcfa15b2cc04c0f494dbc0c6829ee8c2f015b3"
 
   bottle do
     cellar :any
-    sha256 "ba0586276dcd8216c92e1b667664ecc485c91396caf761e094b7bfd1ace447a7" => :high_sierra
-    sha256 "7de2fbd91043617bd1a5865bf9f7fbea5f2c82b99eae70989550b3eb8d49f6be" => :sierra
-    sha256 "18bd84803a3021374a4f143a76fae14b6805d2c905fc8a26b3a7a06e275b86d8" => :el_capitan
+    sha256 "d9565e4d3bb35116a48cff9da7da62aa8da065c27e9f81e1f22c6b84ceeb39d9" => :high_sierra
+    sha256 "1fbecc40e802d1b4efd7ba45764029d8cce15481586e8eb727681c86f4e456e3" => :sierra
+    sha256 "bc60118b78e08dc5b1b780769f86019d4443c56a12ad63a3966a213ef3385555" => :el_capitan
   end
 
   head do
@@ -23,7 +23,7 @@ class Nco < Formula
   depends_on "texinfo"
   depends_on "udunits"
 
-  resource("example_nc") do
+  resource "example_nc" do
     url "https://www.unidata.ucar.edu/software/netcdf/examples/WMI_Lear.nc"
     sha256 "e37527146376716ef335d01d68efc8d0142bdebf8d9d7f4e8cbe6f880807bdef"
   end
