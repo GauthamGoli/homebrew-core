@@ -3,7 +3,6 @@ class Configen < Formula
   homepage "https://github.com/theappbusiness/ConfigGenerator"
   url "https://github.com/theappbusiness/ConfigGenerator/archive/v1.0.1.tar.gz"
   sha256 "ade2c4296643cbc0c21d989d4506eef9d797a0349300ff46590a6b47979cdf64"
-
   head "https://github.com/theappbusiness/ConfigGenerator.git"
 
   bottle do
@@ -26,7 +25,7 @@ class Configen < Formula
       <plist version="1.0">
       <dict>
         <key>testURL</key>
-        <string>http://example.com/api</string>
+        <string>https://example.com/api</string>
         <key>retryCount</key>
         <integer>2</integer>
       </dict>
@@ -38,7 +37,7 @@ class Configen < Formula
     EOS
     system bin/"configen", "-p", "test.plist", "-h", "test.map", "-n", "AppConfig", "-o", testpath
     assert_predicate testpath/"AppConfig.swift", :exist?, "Failed to create config class!"
-    assert_match "static let testURL: URL = URL(string: \"http://example.com/api\")", File.read("AppConfig.swift")
+    assert_match "static let testURL: URL = URL(string: \"https://example.com/api\")", File.read("AppConfig.swift")
     assert_match "static let retryCount: Int = 2", File.read("AppConfig.swift")
   end
 end

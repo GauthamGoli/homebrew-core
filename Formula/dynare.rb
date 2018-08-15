@@ -1,13 +1,14 @@
 class Dynare < Formula
   desc "Platform for economic models, particularly DSGE and OLG models"
   homepage "https://www.dynare.org/"
-  url "https://www.dynare.org/release/source/dynare-4.5.4.tar.xz"
-  sha256 "5ee1c30e9a8e0c0ec4f60e83c02beb98271f9e324b9b667d4a5f5b2ee634a7e6"
+  url "https://www.dynare.org/release/source/dynare-4.5.6.tar.xz"
+  sha256 "a4ff0ee5892a044d169ead2778e96fefcf617535fab28d25b977d8d008c7fe87"
+  revision 1
 
   bottle do
-    sha256 "99b20935eb0a0e22b482fe50a9ab72d8521db2effbc2de604dcf22d19e75be95" => :high_sierra
-    sha256 "89c7f0cca0533d6b5cc16bdd64e3bf8343bcd4a0f64116e34e539a767c843e54" => :sierra
-    sha256 "c7ce5fcab53cbad43574d5920725216f98b81d5664e11f7e7db95bb4b092caa5" => :el_capitan
+    sha256 "70f0b0ca9e2be1e832f9daf1de297dcec8039f3cd3369bbe3a6fba1bb8b77155" => :high_sierra
+    sha256 "226cc9897d4c41b0cbfb4e6cdc654bbac8c28de13fc636a086f7ebfd26277fe5" => :sierra
+    sha256 "0ef378d51fddaf8b2b90365b5faa1ce1fa575e47ba8a7546690c2f20310941e3" => :el_capitan
   end
 
   head do
@@ -65,7 +66,7 @@ class Dynare < Formula
   def caveats; <<~EOS
     To get started with Dynare, open Octave and type
       addpath #{opt_lib}/dynare/matlab
-    EOS
+  EOS
   end
 
   test do

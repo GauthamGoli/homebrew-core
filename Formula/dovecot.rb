@@ -1,13 +1,13 @@
 class Dovecot < Formula
   desc "IMAP/POP3 server"
   homepage "https://dovecot.org/"
-  url "https://dovecot.org/releases/2.3/dovecot-2.3.0.1.tar.gz"
-  sha256 "ab772b3e214683aba347203c9391295552255c4d69afb324c7b8c8fc5ad6f153"
+  url "https://dovecot.org/releases/2.3/dovecot-2.3.2.1.tar.gz"
+  sha256 "4a65118508dc7a562e5f90dd7c3f56219fff22367c496f17d77cd0c7e2724e34"
 
   bottle do
-    sha256 "93e7205143d531082246082a2328a3c8437ac01a054274b7b1385854b811227c" => :high_sierra
-    sha256 "daaa11ac00a342a4c4214c7cf205dcaed8e85830842d4920c4f7bfe51bd64db1" => :sierra
-    sha256 "180b23abc929be1684f6a52201a9eb6c10594e3b2e6db0a9f64a3c6d1973f6d2" => :el_capitan
+    sha256 "a65b0489355543c50a65eff854b5bdbc1ea79246517eea0a49c97617a22edff5" => :high_sierra
+    sha256 "182a940de84e95f3ddf06746c28b616412417d9684d100b1d03ea90991ae5517" => :sierra
+    sha256 "0ea8bb9c76d54244d97a8ef135c98b9321be68c1bf3ff0ddfea1d1080f55c01a" => :el_capitan
   end
 
   option "with-pam", "Build with PAM support"
@@ -19,13 +19,13 @@ class Dovecot < Formula
   depends_on "clucene" => :optional
 
   resource "pigeonhole" do
-    url "https://pigeonhole.dovecot.org/releases/2.3/dovecot-2.3-pigeonhole-0.5.0.1.tar.gz"
-    sha256 "56356d14b10c45aa472074e85bfc582c2f08a15a43ecf24f481df39b206efad2"
+    url "https://pigeonhole.dovecot.org/releases/2.3/dovecot-2.3-pigeonhole-0.5.2.tar.gz"
+    sha256 "950e8e15c58e539761255e140dd3678dd2477fa432a5f2b804e53821bdc02535"
   end
 
   resource "stemmer" do
     url "https://github.com/snowballstem/snowball.git",
-        :revision => "84e1a4ad1ee8789c81b3541744bb710c7a50a452"
+        :revision => "1964ce688cbeca505263c8f77e16ed923296ce7a"
   end
 
   def install
@@ -76,7 +76,7 @@ class Dovecot < Formula
   def caveats; <<~EOS
     For Dovecot to work, you may need to create a dovecot user
     and group depending on your configuration file options.
-    EOS
+  EOS
   end
 
   plist_options :startup => true
@@ -113,7 +113,7 @@ class Dovecot < Formula
         </dict>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
