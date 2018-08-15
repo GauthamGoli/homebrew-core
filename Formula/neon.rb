@@ -1,6 +1,6 @@
 class Neon < Formula
   desc "HTTP and WebDAV client library with a C interface"
-  homepage "https://web.archive.org/web/20070925040920/www.webdav.org/neon/"
+  homepage "https://web.archive.org/web/webdav.org/neon/"
   url "https://mirrorservice.org/sites/distfiles.macports.org/neon/neon-0.30.2.tar.gz"
   mirror "https://fossies.org/linux/www/neon-0.30.2.tar.gz"
   sha256 "db0bd8cdec329b48f53a6f00199c92d5ba40b0f015b153718d1b15d3d967fbca"
@@ -12,8 +12,6 @@ class Neon < Formula
     sha256 "2aafd9bf8e7fb42d8cce9b6a7467e8beccc11931b824766e341a8d72331e0c48" => :el_capitan
     sha256 "7348fcda6d13a8cba37a98b7ac6c9876a2ffa037714954872832d390c5a475d7" => :yosemite
   end
-
-  keg_only :provided_pre_mountain_lion
 
   depends_on "pkg-config" => :build
   depends_on "openssl"

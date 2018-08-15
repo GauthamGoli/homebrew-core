@@ -1,28 +1,32 @@
 class Graphene < Formula
   desc "Thin layer of graphic data types"
   homepage "https://ebassi.github.io/graphene/"
-  url "https://download.gnome.org/sources/graphene/1.6/graphene-1.6.2.tar.xz"
-  sha256 "8f7d1984c06aefe3b47a668c12ad9f3db0bcb2d09c55e6267b82a90f6b10d961"
-  revision 1
+  url "https://download.gnome.org/sources/graphene/1.8/graphene-1.8.2.tar.xz"
+  sha256 "b3fcf20996e57b1f4df3941caac10f143bb29890a42f7a65407cd19271fc89f7"
 
   bottle do
-    sha256 "4ed91e3d415e97cbb88432448e67199b74738705b5a859a6db1577cb1eab1441" => :high_sierra
-    sha256 "08f58d77c34cdef2b11f4195e17d929438678a8ee1c98d8243cb3386c5d5c5f5" => :sierra
-    sha256 "fb90bbbabde61e65bd5ef9afd48348bc855ffd418252b715b2e84b4d0a2de3ff" => :el_capitan
+    sha256 "bc7565a6e02e0b73b4eda321b6a473c6999e6cdfb26c68b97ac0c1926d97c2fd" => :high_sierra
+    sha256 "370975de026735c02592df6f779e2b2599f331352cd951877ef28441ba83390a" => :sierra
+    sha256 "37754eee73a297cefd43828934cfccbe4098016f2b0aee02f9d32297717ec1d9" => :el_capitan
   end
 
+  depends_on "gobject-introspection" => :build
   depends_on "pkg-config" => :build
+  depends_on "meson-internal" => :build
+  depends_on "ninja" => :build
+  depends_on "python" => :build
   depends_on "glib"
-  depends_on "gobject-introspection"
-  depends_on "python"
+
+  patch :DATA
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}"
-    system "make"
-    system "make", "check"
-    system "make", "install"
+    ENV.refurbish_args
+
+    mkdir "build" do
+      system "meson", "--prefix=#{prefix}", ".."
+      system "ninja"
+      system "ninja", "install"
+    end
   end
 
   test do
@@ -49,3 +53,21 @@ class Graphene < Formula
     system "./test"
   end
 end
+
+__END__
+diff --git a/meson.build b/meson.build
+index 0736994..5932028 100644
+--- a/meson.build
++++ b/meson.build
+@@ -112,11 +112,6 @@ if host_system == 'linux' and cc.get_id() == 'gcc'
+   common_ldflags = [ '-Wl,-Bsymbolic-functions', '-Wl,-z,relro', '-Wl,-z,now', ]
+ endif
+
+-# Maintain compatibility with Autotools on macOS
+-if host_system == 'darwin'
+-  common_ldflags += [ '-compatibility_version 1', '-current_version 1.0', ]
+-endif
+-
+ # Required dependencies
+ mathlib = cc.find_library('m', required: false)
+ threadlib = dependency('threads')

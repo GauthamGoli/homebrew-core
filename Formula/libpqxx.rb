@@ -1,18 +1,19 @@
 class Libpqxx < Formula
   desc "C++ connector for PostgreSQL"
   homepage "http://pqxx.org/development/libpqxx/"
-  url "https://github.com/jtv/libpqxx/archive/6.1.0.tar.gz"
-  sha256 "a36899821e4bc354f424c041d43a7f5c0def24d2b7bb3f486d0e6b131520603f"
-  revision 1
+  url "https://github.com/jtv/libpqxx/archive/6.2.4.tar.gz"
+  sha256 "91a295d9e06fc36db5d993970aa1928e053a57ec03bf6284a1c534844ed35ed3"
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "f03f468c080032b818c131c7a568a380d9507790d56808763f9e8a1625ee10f3" => :high_sierra
-    sha256 "dde9619860ff5803fb2ef60f715c7aa1cfef88ae534ebb49944f8fd4b286beba" => :sierra
-    sha256 "1ed4a94cf418f5f5b2f66b8ed3e06ba92755126bba76510890df097f2dfc7396" => :el_capitan
+    sha256 "8017994020ce366492b79055e349730ffb2964e5fac11b3e734360e22b9e7986" => :high_sierra
+    sha256 "599b8ac667629d5704a1822f64d0609bd0c4833c6b61b6164088beda8a7ceaa7" => :sierra
+    sha256 "24c11214d49a0f493871beadbf8cbaac859b4b4393f74f8f0a880e0f269154a7" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
+  depends_on "xmlto" => :build
   depends_on "postgresql"
 
   def install

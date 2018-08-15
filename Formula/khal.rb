@@ -4,16 +4,16 @@ class Khal < Formula
   desc "CLI calendar application"
   homepage "https://lostpackets.de/khal/"
   url "https://github.com/pimutils/khal.git",
-      :tag => "v0.9.8",
-      :revision => "b03df58c129f99a35ba74cda0fbc253eb47cfeac"
-  revision 2
+      :tag => "v0.9.9",
+      :revision => "edce128b42401fb89ca18f501ae2be1449cdc6b2"
+  revision 1
   head "https://github.com/pimutils/khal.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "591caaf82d88564d712cedbee4a65f856c106a835f6b0fc0901d43b8d8d65e30" => :high_sierra
-    sha256 "67a01a6e9f7b6c929c07297042241d801487809c3e70046876cb589e74feee26" => :sierra
-    sha256 "387106ceb72628802c9756fb37310d25d8b97410e80cec2fd6a8df0c3de1b253" => :el_capitan
+    sha256 "cec23d72db2f369b1f15a71f41d14fa1aead740ee5ad91e5de0eb44489136c6d" => :high_sierra
+    sha256 "2bc31c6c111017cae6b597d8c924fe07d00c798d98c31359b7890af848a4b693" => :sierra
+    sha256 "a30259be22d2c8c95bd8ba9617846e38ea29d1f8b7cc859094db6f242bac570e" => :el_capitan
   end
 
   depends_on "python"

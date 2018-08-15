@@ -1,14 +1,13 @@
 class Opencv < Formula
   desc "Open source computer vision library"
   homepage "https://opencv.org/"
-  url "https://github.com/opencv/opencv/archive/3.4.1.tar.gz"
-  sha256 "f1b87684d75496a1054405ae3ee0b6573acaf3dad39eaf4f1d66fdd7e03dc852"
-  revision 1
+  url "https://github.com/opencv/opencv/archive/3.4.2.tar.gz"
+  sha256 "81dbd5e7e9f8a4c936b94629bf4765745942a1d634ae38ec08bc57b73b28ffc5"
 
   bottle do
-    sha256 "123340d250cc28c0b2fbac4561e61bd01d58bb42805a593348636e22f42dbb2d" => :high_sierra
-    sha256 "d4e9290460d874ff6d83799b03fb22bcfd28830b081d95a50b3aa90d895b6eea" => :sierra
-    sha256 "414f06f1b1f77e30c154301e6eb889aa191f310925e7905258154e90f8245d30" => :el_capitan
+    sha256 "e8a878f981fbd9ae7daf6f6f73be39dcd20baaf34911b1937ef9b91e0d6d889e" => :high_sierra
+    sha256 "7d42a502f14163663c985247cea157a19f714e1fd2641bd5fc2f653f85592473" => :sierra
+    sha256 "3ca5f6be0e49fe59a3b9274ebda00741de5e8265b6de35813fef43c00086148c" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -27,8 +26,8 @@ class Opencv < Formula
   needs :cxx11
 
   resource "contrib" do
-    url "https://github.com/opencv/opencv_contrib/archive/3.4.1.tar.gz"
-    sha256 "298c69ee006d7675e1ff9d371ba8b0d9e7e88374bb7ba0f9d0789851d352ec6e"
+    url "https://github.com/opencv/opencv_contrib/archive/3.4.2.tar.gz"
+    sha256 "45a52764ebd2558fa0b7fd8dc47379b37dd0956d912abbf7c786228374fdf60d"
   end
 
   def install
@@ -57,7 +56,9 @@ class Opencv < Formula
       -DBUILD_TESTS=OFF
       -DBUILD_TIFF=OFF
       -DBUILD_ZLIB=OFF
+      -DBUILD_opencv_hdf=OFF
       -DBUILD_opencv_java=OFF
+      -DBUILD_opencv_text=OFF
       -DOPENCV_ENABLE_NONFREE=ON
       -DOPENCV_EXTRA_MODULES_PATH=#{buildpath}/opencv_contrib/modules
       -DWITH_1394=OFF
@@ -91,6 +92,11 @@ class Opencv < Formula
       system "cmake", "..", *args
       system "make"
       system "make", "install"
+      system "make", "clean"
+      system "cmake", "..", "-DBUILD_SHARED_LIBS=OFF", *args
+      system "make"
+      lib.install Dir["lib/*.a"]
+      lib.install Dir["3rdparty/**/*.a"]
     end
   end
 

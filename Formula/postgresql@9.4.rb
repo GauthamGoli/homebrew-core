@@ -1,13 +1,13 @@
 class PostgresqlAT94 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v9.4.17/postgresql-9.4.17.tar.bz2"
-  sha256 "7a320cd335052b840d209dc9688f09965763351c590e3cc7bf577591179fd7c6"
+  url "https://ftp.postgresql.org/pub/source/v9.4.19/postgresql-9.4.19.tar.bz2"
+  sha256 "03776b036b2a05371083558e10c21cc4b90bde9eb3aff60299c4ce7c084c168b"
 
   bottle do
-    sha256 "4de12464ffdd58c47480e6ba8f1a90e8dafe552f50d464bb4c002c136682e0ba" => :high_sierra
-    sha256 "aa382b559a415c56678fa2e35447394572c9ab6718d2c20088f4735882516deb" => :sierra
-    sha256 "44a39ef02931473bcfa938806d14befc931718e80710d70707ebdb589cd580d2" => :el_capitan
+    sha256 "b593ab2e71cfa12c23b1f4f8de5503a914c84fa7f7c1eb494562dfc604f0d8fb" => :high_sierra
+    sha256 "4f0e3954fdb63d05fec7fb5a5defe6be9f2c0521a7ac3c4a5b07b8f7fcc3fa2f" => :sierra
+    sha256 "cbd349a265798fd5d07d0d75377c3bb6c0eac238e72d1c2307b1908df487f9fe" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -127,7 +127,7 @@ class PostgresqlAT94 < Formula
       <string>#{var}/log/#{name}.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

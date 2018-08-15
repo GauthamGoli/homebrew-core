@@ -1,13 +1,13 @@
 class Proj < Formula
   desc "Cartographic Projections Library"
-  homepage "http://proj4.org/"
-  url "https://download.osgeo.org/proj/proj-5.0.0.tar.gz"
-  sha256 "b30df08d736e69744cb255828721abb545b494d6032c13a96520f3219a444cd2"
+  homepage "https://proj4.org/"
+  url "https://download.osgeo.org/proj/proj-5.1.0.tar.gz"
+  sha256 "6b1379a53317d9b5b8c723c1dc7bf2e3a8eb22ceb46b8807a1ce48ef65685bb3"
 
   bottle do
-    sha256 "e8593ac943fbf2911a66b300c0c3f55ec7bfb9fe1ac636ff59ac50de85d04daa" => :high_sierra
-    sha256 "13e815d8283d20e2f7a5ab1a2f3fb6a465ef67112f7dce89f4278a417469f973" => :sierra
-    sha256 "6f9e7306f404158d257bb791ff7cfc05c9b0ad98f7652adcb9e59259f94dafb9" => :el_capitan
+    sha256 "e0ce8f9ec75dd95fda3881910e36f13c32641649d3c8f8a3aeeb885e52e82333" => :high_sierra
+    sha256 "6ddff7eaa129484db6df07616150549769427d8ad6da7fabd3b83c76536c7396" => :sierra
+    sha256 "038b35705b4bbf3399c23f3a8b6f170338a45728bbe28b5807ff9753a03965d8" => :el_capitan
   end
 
   head do
@@ -19,13 +19,20 @@ class Proj < Formula
 
   option "with-vdatum", "Install vertical datum files (~380 MB)"
 
+  conflicts_with "blast", :because => "both install a `libproj.a` library"
+
   # The datum grid files are required to support datum shifting
   resource "datumgrid" do
-    url "https://download.osgeo.org/proj/proj-datumgrid-1.5.zip"
-    sha256 "723c4017d95d7a8abdf3bda4e18d3c15d79b00f9326d453da5fdf13f96c287db"
+    url "https://download.osgeo.org/proj/proj-datumgrid-1.7.zip"
+    sha256 "ffcad4453fac3b4a13ca678ef343e688496e18019f35709ef03c5f200e9fb85a"
   end
 
   # Vertical datum files
+  resource "usa_geoid2012b" do
+    url "https://download.osgeo.org/proj/vdatum/usa_geoid2012b.zip"
+    sha256 "7a2bddfff18c303853b692830515b86eb46a3e6f81f14d4f193f0e28b1d57aca"
+  end
+
   resource "usa_geoid2012" do
     url "https://download.osgeo.org/proj/vdatum/usa_geoid2012.zip"
     sha256 "afe49dc2c405d19a467ec756483944a3c9148e8c1460cb7e82dc8d4a64c4c472"
@@ -59,11 +66,6 @@ class Proj < Formula
   resource "vertconw" do
     url "https://download.osgeo.org/proj/vdatum/vertcon/vertconw.gtx"
     sha256 "de648c0f6e8b5ebfc4b2d82f056c7b993ca3c37373a7f6b7844fe9bd4871821b"
-  end
-
-  resource "egm96_15" do
-    url "https://download.osgeo.org/proj/vdatum/egm96_15/egm96_15.gtx"
-    sha256 "c02a6eb70a7a78efebe5adf3ade626eb75390e170bb8b3f36136a2c28f5326a0"
   end
 
   resource "egm08_25" do

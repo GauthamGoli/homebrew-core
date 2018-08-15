@@ -3,11 +3,12 @@ class Caffe < Formula
   homepage "https://caffe.berkeleyvision.org/"
   url "https://github.com/BVLC/caffe/archive/1.0.tar.gz"
   sha256 "71d3c9eb8a183150f965a465824d01fe82826c22505f7aa314f700ace03fa77f"
+  revision 2
 
   bottle do
-    sha256 "c17c07ff6665a6575bc7956c73e2fd5a83528400d1ee818efd073b1e949268d8" => :high_sierra
-    sha256 "b64c1327c3a748b1632f8b741263f0dcf470602bc5121d67fe5b5cfc66ddb0e7" => :sierra
-    sha256 "7fe49fafae101b48a1870019eead0093fb3a70fdd9e912609434d99c1c876f71" => :el_capitan
+    sha256 "37b3112edbfcdf5ded4d914d10fe29c9b676fb339f18fd9bc7f361be80083aa0" => :high_sierra
+    sha256 "623b08298ca79601fad506559a4c59ef4feae12e189b39855acd98ee04b1a5e6" => :sierra
+    sha256 "a8e8928e47853cc55233f7efd3969deb106078aa8354c15758e5417ba71d7920" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -27,7 +28,11 @@ class Caffe < Formula
     sha256 "472d4a06035497b180636d8a82667129960371375bd10fcb6df5c6c7631f25e0"
   end
 
+  needs :cxx11
+
   def install
+    ENV.cxx11
+
     args = std_cmake_args + %w[
       -DCPU_ONLY=ON
       -DUSE_NCCL=OFF

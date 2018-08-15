@@ -1,20 +1,26 @@
 class Automake < Formula
   desc "Tool for generating GNU Standards-compliant Makefiles"
   homepage "https://www.gnu.org/software/automake/"
-  url "https://ftp.gnu.org/gnu/automake/automake-1.16.tar.xz"
-  mirror "https://ftpmirror.gnu.org/automake/automake-1.16.tar.xz"
-  sha256 "f98f2d97b11851cbe7c2d4b4eaef498ae9d17a3c2ef1401609b7b4ca66655b8a"
+  url "https://ftp.gnu.org/gnu/automake/automake-1.16.1.tar.xz"
+  mirror "https://ftpmirror.gnu.org/automake/automake-1.16.1.tar.xz"
+  sha256 "5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921"
+  revision 1
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "8135f20535b5b225c082106b005d85aa280010b1c1eeedb56d456b6e3478359a" => :high_sierra
-    sha256 "8135f20535b5b225c082106b005d85aa280010b1c1eeedb56d456b6e3478359a" => :sierra
-    sha256 "8accb0115d48ed86969fb4591bd911dded858fba5346f76715e9cd7233ce21ba" => :el_capitan
+    sha256 "fb32c065aaf91661380af32ed301edcf209ba453635c79ca945353b67e54af10" => :high_sierra
+    sha256 "fb32c065aaf91661380af32ed301edcf209ba453635c79ca945353b67e54af10" => :sierra
+    sha256 "d552844779f0dc4062f27203f7facfbd74c9d1780724ac76a86791e401aa73bd" => :el_capitan
   end
 
-  keg_only :provided_until_xcode43
+  depends_on "autoconf"
 
-  depends_on "autoconf" => :run
+  # http://gnu-automake.7480.n7.nabble.com/bug-31222-automake-1-16-1-am-pep3147-tweak-bug-td22937.html
+  # Remove this when applying any future 1.16.2 update.
+  patch do
+    url "https://git.savannah.gnu.org/cgit/automake.git/patch/?id=a348d830659fffd2cfc42994524783b07e69b4b5"
+    sha256 "7a57ca2b91f7f3c0b168cf5ffbc8a1b2168f3886bcadcc15412281472dace3ce"
+  end
 
   def install
     ENV["PERL"] = "/usr/bin/perl"
