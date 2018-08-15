@@ -5,13 +5,13 @@ class Csvtomd < Formula
   homepage "https://github.com/mplewis/csvtomd"
   url "https://files.pythonhosted.org/packages/2f/41/289bedde7fb32d817d5802eff68b99546842cb34df840665ec39b363f258/csvtomd-0.2.1.tar.gz"
   sha256 "d9fdf166c3c299ad5800b3cb1661f223b98237f38f22e9d253d45d321f70ec72"
-  revision 2
+  revision 4
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "a5bddc4b8736fa0045b6eecf20182cf00feb4eea6502ebd2047807852061f9f3" => :high_sierra
-    sha256 "6b87f6a4094884349722fe7480b8bf7b244f6e4cb75da85f58db28f10bd6f75b" => :sierra
-    sha256 "fc233ab99bed5dcd853a3a15ff38e607694187acd6ed9be070ce7c7a25eb0434" => :el_capitan
+    sha256 "9676da327548cff3c4e1235b7d9071939315b22f8a7fcce3c555b308890b8338" => :high_sierra
+    sha256 "b38719288a0ba84c2a2143ac0f13965eac1f796e2a6ab20918fc59d304415f2b" => :sierra
+    sha256 "d343b9087bbaf2b5a5be09f71d23ff9b07742cc262f5fd66b7b220d2db73b4b2" => :el_capitan
   end
 
   depends_on "python"

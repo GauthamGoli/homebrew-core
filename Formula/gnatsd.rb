@@ -1,15 +1,15 @@
 class Gnatsd < Formula
   desc "Lightweight cloud messaging system"
   homepage "https://nats.io"
-  url "https://github.com/nats-io/gnatsd/archive/v1.0.6.tar.gz"
-  sha256 "1e1250591008c59df609f4714f1e91bc97984902cfe2007bc0d042f25cc1ed80"
+  url "https://github.com/nats-io/gnatsd/archive/v1.2.0.tar.gz"
+  sha256 "9624ce12adb528e86c03f78305c13f9c5f4edb48cf7b0db123d786f12be00590"
   head "https://github.com/nats-io/gnatsd.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "6681fdcb1047e2ee559791e92a2b9d0eacc9baf18143fa29fdb4a4b2fa70c582" => :high_sierra
-    sha256 "2b4a404c578d05d650a716b034022e59797bbf9240b0b4355397c2708329167e" => :sierra
-    sha256 "705e36737bc7b921c5e1c92a775ce4e686495ce7cb6622c2bdc13e36fbbca884" => :el_capitan
+    sha256 "90b0d83d6c017b0cc00719737766caf1ddeb561937bf716eb6df8912b311803d" => :high_sierra
+    sha256 "06fe209745c21694dd9a0b96a8e7135322d944271017f5ddd928f774a9549ec7" => :sierra
+    sha256 "4c840c3e72fff4fa9a74663e698d3be2c18e33c19639a7fe2e37cd4cbf7cf015" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -38,7 +38,7 @@ class Gnatsd < Formula
         <true/>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

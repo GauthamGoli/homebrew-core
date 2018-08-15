@@ -1,19 +1,16 @@
 class Liblwgeom < Formula
   desc "Allows SpatiaLite to support ST_MakeValid() like PostGIS"
   homepage "https://postgis.net/"
-  url "https://download.osgeo.org/postgis/source/postgis-2.4.3.tar.gz"
-  sha256 "ea5374c5db6b645ba5628ddcb08f71d3b3d90a464d366b4e1d20d5a268bde4b9"
+  url "https://download.osgeo.org/postgis/source/postgis-2.4.4.tar.gz"
+  sha256 "0663efb589210d5048d95c817e5cf29552ec8180e16d4c6ef56c94255faca8c2"
   revision 1
+  head "https://svn.osgeo.org/postgis/trunk/"
 
   bottle do
     cellar :any
-    sha256 "27deb705d45152887db0b7d4b49ac4cf20b08b419589b86c54827d43f26e767f" => :high_sierra
-    sha256 "d295d62000aa81ca61b26b265dbb9ee43104346401c266a2b1566d157646fea4" => :sierra
-    sha256 "73371ed890f29ec626a4fac6b73b037d6c9a06e5f79c38a1e7e7343d8cf64d9f" => :el_capitan
-  end
-
-  head do
-    url "https://svn.osgeo.org/postgis/trunk/"
+    sha256 "61f2cd87123236e471f469467319665664743837a35c5074e868c9908824843e" => :high_sierra
+    sha256 "49cff9c152a94004541516365c60decf5dd5107977e300ef9185d1e9bf8d6db6" => :sierra
+    sha256 "38054f5facd281c4acbe75597f67bed2133549efe33bef0f6200116dd47605d2" => :el_capitan
   end
 
   keg_only "conflicts with PostGIS, which also installs liblwgeom.dylib"
@@ -71,7 +68,8 @@ class Liblwgeom < Formula
         return 0;
       }
     EOS
-    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-llwgeom", "-o", "test"
+    system ENV.cc, "test.c", "-I#{include}", "-I#{Formula["proj"].opt_include}",
+                   "-L#{lib}", "-llwgeom", "-o", "test"
     system "./test"
   end
 end

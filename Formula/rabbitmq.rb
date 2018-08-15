@@ -1,8 +1,9 @@
 class Rabbitmq < Formula
   desc "Messaging broker"
   homepage "https://www.rabbitmq.com"
-  url "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.3/rabbitmq-server-generic-unix-3.7.3.tar.xz"
-  sha256 "ee793cbe6e9a9fcf465158a78354a6db804edf92ddcf4f9e51256fdcc5dc953f"
+  url "https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.7/rabbitmq-server-generic-unix-3.7.7.tar.xz"
+  sha256 "640fc5d0b10705f838419191bbf917e66f3ff5eb35f07fc51c2f197fda0aa170"
+  revision 1
 
   bottle :unneeded
 
@@ -51,14 +52,14 @@ class Rabbitmq < Formula
 
   def caveats; <<~EOS
     Management Plugin enabled by default at http://localhost:15672
-    EOS
+  EOS
   end
 
   def rabbitmq_env; <<~EOS
     CONFIG_FILE=#{etc}/rabbitmq/rabbitmq
     NODE_IP_ADDRESS=127.0.0.1
     NODENAME=rabbit@localhost
-    EOS
+  EOS
   end
 
   plist_options :manual => "rabbitmq-server"
@@ -86,7 +87,7 @@ class Rabbitmq < Formula
         </dict>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
