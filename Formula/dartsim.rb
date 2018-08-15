@@ -1,14 +1,13 @@
 class Dartsim < Formula
   desc "Dynamic Animation and Robotics Toolkit"
   homepage "https://dartsim.github.io/"
-  url "https://github.com/dartsim/dart/archive/v6.3.0.tar.gz"
-  sha256 "aa92634c1c97d99966cf16c4a0845792941358c063409fa00c28b4039c961c25"
-  revision 1
+  url "https://github.com/dartsim/dart/archive/v6.6.1.tar.gz"
+  sha256 "4000ad91dc20a5fee89f2252c9eb28cef62c89df88bff218374b70f38245a61c"
 
   bottle do
-    sha256 "0b80a62435ed5df93ecebca994ebfdfd3d6962df0f6b9b1ebee8d050c80f7a6d" => :high_sierra
-    sha256 "0bdd871592c4425d824c02fc06a4931e246f1bcb39ce85393c4d3ed72fe8e6e9" => :sierra
-    sha256 "1e4b48dc6b53a8ef298c8c405010cd1e4c58bc5b171db9b93a2ace3c28f803df" => :el_capitan
+    sha256 "fa6a8387829bde1eef29583c3619d0064110a0fa5f6aae3362351497e333c61c" => :high_sierra
+    sha256 "375682ec7bfacd41e5c3a5ccbdc145bab74d21c29f94c87e970c9fcd116b02c3" => :sierra
+    sha256 "2fa5ebd80eacb6406ed823a9e85cd380afad0a5abcf42a1a6399bcddc0ac623e" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -19,12 +18,10 @@ class Dartsim < Formula
   depends_on "eigen"
   depends_on "fcl"
   depends_on "flann"
-  depends_on "freeglut"
   depends_on "libccd"
   depends_on "nlopt"
   depends_on "ode"
   depends_on "open-scene-graph"
-  depends_on "tinyxml"
   depends_on "tinyxml2"
   depends_on "urdfdom"
 
@@ -32,8 +29,23 @@ class Dartsim < Formula
 
   def install
     ENV.cxx11
-    system "cmake", ".", *std_cmake_args
+
+    # Force to link to system GLUT (see: https://cmake.org/Bug/view.php?id=16045)
+    system "cmake", ".", "-DGLUT_glut_LIBRARY=/System/Library/Frameworks/GLUT.framework",
+                         *std_cmake_args
     system "make", "install"
+
+    # Avoid revision bumps whenever fcl's or libccd's Cellar paths change
+    inreplace share/"dart/cmake/dart_dartTargets.cmake" do |s|
+      s.gsub! Formula["fcl"].prefix.realpath, Formula["fcl"].opt_prefix
+      s.gsub! Formula["libccd"].prefix.realpath, Formula["libccd"].opt_prefix
+    end
+
+    # Avoid revision bumps whenever urdfdom's or urdfdom_headers's Cellar paths change
+    inreplace share/"dart/cmake/dart_utils-urdfTargets.cmake" do |s|
+      s.gsub! Formula["urdfdom"].prefix.realpath, Formula["urdfdom"].opt_prefix
+      s.gsub! Formula["urdfdom_headers"].prefix.realpath, Formula["urdfdom_headers"].opt_prefix
+    end
   end
 
   test do
@@ -47,7 +59,7 @@ class Dartsim < Formula
     EOS
     system ENV.cxx, "test.cpp", "-I#{Formula["eigen"].include}/eigen3",
                     "-I#{include}", "-L#{lib}", "-ldart",
-                    "-lassimp", "-std=c++11", "-o", "test"
+                    "-lassimp", "-lboost_system", "-std=c++11", "-o", "test"
     system "./test"
   end
 end

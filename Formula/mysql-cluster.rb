@@ -23,7 +23,7 @@ class MysqlCluster < Formula
   deprecated_option "enable-local-infile" => "with-local-infile"
   deprecated_option "enable-debug" => "with-debug"
 
-  depends_on :java => "1.7+"
+  depends_on :java => "1.8"
   depends_on "cmake" => :build
   depends_on "pidof" unless MacOS.version >= :mountain_lion
   depends_on "openssl"
@@ -31,6 +31,8 @@ class MysqlCluster < Formula
   conflicts_with "memcached", :because => "both install `bin/memcached`"
   conflicts_with "mysql", "mariadb", "percona-server",
     :because => "mysql, mariadb, and percona install the same binaries."
+  conflicts_with "mysql-connector-c",
+    :because => "both install `bin/my_print_defaults`"
 
   fails_with :clang do
     build 500
@@ -169,7 +171,7 @@ class MysqlCluster < Formula
 
       mysqladmin -u root -p shutdown
       ndb_mgm -e shutdown
-    EOS
+  EOS
   end
 
   def my_cnf; <<~EOS
@@ -180,7 +182,7 @@ class MysqlCluster < Formula
     port=5000
     # Only allow connections from localhost
     bind-address = 127.0.0.1
-    EOS
+  EOS
   end
 
   def config_ini; <<~EOS
@@ -203,7 +205,7 @@ class MysqlCluster < Formula
 
     [mysqld]
     NodeId=50
-    EOS
+  EOS
   end
 
   # Override Formula#plist_name
@@ -238,7 +240,7 @@ class MysqlCluster < Formula
       <string>#{var}</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   def ndb_mgmd_startup_plist(name); <<~EOS
@@ -267,7 +269,7 @@ class MysqlCluster < Formula
       <string>#{var}/mysql-cluster/#{name}.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   def ndbd_startup_plist(name); <<~EOS
@@ -294,7 +296,7 @@ class MysqlCluster < Formula
       <string>#{var}/mysql-cluster/#{name}.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

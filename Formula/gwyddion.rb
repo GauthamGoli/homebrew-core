@@ -1,14 +1,13 @@
 class Gwyddion < Formula
   desc "Scanning Probe Microscopy visualization and analysis tool"
   homepage "http://gwyddion.net/"
-  url "http://gwyddion.net/download/2.50/gwyddion-2.50.tar.gz"
-  sha256 "f3834dae31d9bf696e8d59e2aa79a373a30d5f6caa6033601d2f9d57afa154f3"
-  revision 1
+  url "http://gwyddion.net/download/2.51/gwyddion-2.51.tar.gz"
+  sha256 "67c1319b3a3e5682a37390b34d2580208a624c7d56dae8b5a3389fa5856508ee"
 
   bottle do
-    sha256 "2ed8543022428b822bb0dac471903457148a7a358fb1d38e09afb1f98be46415" => :high_sierra
-    sha256 "d62de4048a135e8f8683d3d319bce0019fb6e140fad4576a5a370b87e26b0d8e" => :sierra
-    sha256 "659a1211206d02ba4e967643925fe6fcd12ee0cd1f0d647961d76c243baed079" => :el_capitan
+    sha256 "489fc3a8eb5c5601ef7848c90f848f8400cf0624859e118afb2421e754aad6ee" => :high_sierra
+    sha256 "866453f3360e2074d217dde39922ef52485a9c8572b7353f8e038bb729749798" => :sierra
+    sha256 "09c1f364d6942d1fe8b2a88f99340437005b3fc84a7b0ee0e359fcf4a8b0ed5b" => :el_capitan
   end
 
   deprecated_option "with-python" => "with-python@2"

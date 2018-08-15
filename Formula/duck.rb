@@ -2,14 +2,14 @@ class Duck < Formula
   desc "Command-line interface for Cyberduck (a multi-protocol file transfer tool)"
   homepage "https://duck.sh/"
   # check the changelog for the latest stable version: https://cyberduck.io/changelog/
-  url "https://dist.duck.sh/duck-src-6.4.1.27633.tar.gz"
-  sha256 "3e754165cfd96200c5901b291cfb0e8aff5a956fc8d38a6c32e0091444524f52"
+  url "https://dist.duck.sh/duck-src-6.7.0.28613.tar.gz"
+  sha256 "be2eaba6f7f6af418c787caa4f43eca4a66881f3b499902cc78de39aaf588d10"
   head "https://svn.cyberduck.io/trunk/"
 
   bottle do
-    sha256 "75ab35638f01ac012a9e6e49f3b74b2940d0a102bf935896bea6c9a3e7605cb6" => :high_sierra
-    sha256 "f763c28c678876785f073507f35e49e4bd8a8cd6f9dda7b4ac56daeba9494c31" => :sierra
-    sha256 "baa7c7f7065c07b7b5f4915e7e9758ecf78ab0f17a0a3050b7eb82d1d9f80d93" => :el_capitan
+    sha256 "548f752fa9433a4cfc3ea78fed9801f52d2787cae12440c024670ec0a24d87f3" => :high_sierra
+    sha256 "a70b8d1136924d3dd2e1f25bfd56ff3c7c95592672ebbe9519dc58ddf35dcb2c" => :sierra
+    sha256 "80b4b52328b8f24954405228638dd8e08d0673298699885c82af789035c35e54" => :el_capitan
   end
 
   depends_on :java => ["1.8+", :build]
@@ -25,7 +25,7 @@ class Duck < Formula
   end
 
   test do
-    system "#{bin}/duck", "--download", Formula["when"].stable.url, testpath/"test"
-    (testpath/"test").verify_checksum Formula["when"].stable.checksum
+    system "#{bin}/duck", "--download", "https://ftp.gnu.org/gnu/wget/wget-1.19.4.tar.gz", testpath/"test"
+    assert_equal (testpath/"test").sha256, "93fb96b0f48a20ff5be0d9d9d3c4a986b469cb853131f9d5fe4cc9cecbc8b5b5"
   end
 end
