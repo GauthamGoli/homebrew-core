@@ -1,15 +1,14 @@
 class Libosmium < Formula
   desc "Fast and flexible C++ library for working with OpenStreetMap data"
-  homepage "http://osmcode.org/libosmium/"
-  url "https://github.com/osmcode/libosmium/archive/v2.13.1.tar.gz"
-  sha256 "a73cd56838a7438bd9ed208c9ce6794e2d55a1854039c4277a0c160d5071b909"
+  homepage "https://osmcode.org/libosmium/"
+  url "https://github.com/osmcode/libosmium/archive/v2.14.2.tar.gz"
+  sha256 "24b1a73c43e7b8e412ffcd4fb40f1b152edb316ff2799a60e0f31f1eb1212b35"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "2310327bcf2f8e1cc4937da5a7cd7ba526fb8e73435febcb7b5c3e6d879b8ef4" => :high_sierra
-    sha256 "e63f94d42eaf9143c6a8641e365a0fd0ca99281995e647c4964660ef40fb72eb" => :sierra
-    sha256 "e63f94d42eaf9143c6a8641e365a0fd0ca99281995e647c4964660ef40fb72eb" => :el_capitan
-    sha256 "e63f94d42eaf9143c6a8641e365a0fd0ca99281995e647c4964660ef40fb72eb" => :yosemite
+    sha256 "859c27ebb1cf975cd895b27a628f86a64043ac06763ea1ea634b5479f4135515" => :high_sierra
+    sha256 "859c27ebb1cf975cd895b27a628f86a64043ac06763ea1ea634b5479f4135515" => :sierra
+    sha256 "859c27ebb1cf975cd895b27a628f86a64043ac06763ea1ea634b5479f4135515" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -20,11 +19,18 @@ class Libosmium < Formula
   depends_on "proj" => :optional
   depends_on "doxygen" => :optional
 
+  resource "protozero" do
+    url "https://github.com/mapbox/protozero/archive/v1.6.3.tar.gz"
+    sha256 "c5d3c71f5fb56d867ff0536e55cd7a3f2eb0d09f6ebbf636b0fde4f0e12552f5"
+  end
+
   def install
-    mkdir "build" do
-      system "cmake", *std_cmake_args, "-DINSTALL_GDALCPP=ON", "-DINSTALL_PROTOZERO=ON", "-DINSTALL_UTFCPP=ON", ".."
-      system "make", "install"
-    end
+    resource("protozero").stage { libexec.install "include" }
+    system "cmake", ".", "-DINSTALL_GDALCPP=ON",
+                         "-DINSTALL_UTFCPP=ON",
+                         "-DPROTOZERO_INCLUDE_DIR=#{libexec}/include",
+                         *std_cmake_args
+    system "make", "install"
   end
 
   test do
