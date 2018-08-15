@@ -2,15 +2,15 @@ class Mypy < Formula
   desc "Experimental optional static type checker for Python"
   homepage "http://www.mypy-lang.org/"
   url "https://github.com/python/mypy.git",
-      :tag => "v0.570",
-      :revision => "9f603ed9e6ac2a7f80f22b4e9719797a3bbb5215"
+      :tag => "v0.620",
+      :revision => "67b260f0fec0b0d97c92529359796e9ad5c1a30d"
   head "https://github.com/python/mypy.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "caf5b131f1c519a9c815a942b57a63a6a69068ecebb70d7c7f25b7319725e3a7" => :high_sierra
-    sha256 "3746ad652a897a3d6b592d9dd204ef5b4ba29df1534bd8758cbf13a752939f38" => :sierra
-    sha256 "19b2c66bceef0b341be51f6f2d20110dd13272e7ec14f0eef19da1db983fd317" => :el_capitan
+    sha256 "2a13c36dbca981b4b7e658ccbce713273b5820fe44f13bc870198be92b1d892b" => :high_sierra
+    sha256 "719f628bd75e16058f494c4494235513c9c347958f0fe4234b952e4047367fd9" => :sierra
+    sha256 "95a7fda13b3fbace3617e4145719e839002b4523fbf5b35a3457e49ede590edb" => :el_capitan
   end
 
   option "without-sphinx-doc", "Don't build documentation"
@@ -21,13 +21,13 @@ class Mypy < Formula
   depends_on "sphinx-doc" => [:build, :recommended]
 
   resource "psutil" do
-    url "https://files.pythonhosted.org/packages/e2/e1/600326635f97fee89bf8426fef14c5c29f4849c79f68fd79f433d8c1bd96/psutil-5.4.3.tar.gz"
-    sha256 "e2467e9312c2fa191687b89ff4bc2ad8843be4af6fb4dc95a7cc5f7d7a327b18"
+    url "https://files.pythonhosted.org/packages/51/9e/0f8f5423ce28c9109807024f7bdde776ed0b1161de20b408875de7e030c3/psutil-5.4.6.tar.gz"
+    sha256 "686e5a35fe4c0acc25f3466c32e716f2d498aaae7b7edc03e2305b682226bcf6"
   end
 
   resource "sphinx_rtd_theme" do
-    url "https://files.pythonhosted.org/packages/8b/e5/b1933472424b30affb0a8cea8f0ef052a31ada96e5d1823911d7f4bfdf8e/sphinx_rtd_theme-0.2.4.tar.gz"
-    sha256 "2df74b8ff6fae6965c527e97cca6c6c944886aae474b490e17f92adfbe843417"
+    url "https://files.pythonhosted.org/packages/1c/f2/a1361e5f399e0b4182d031065eececa63ddb8c19a0616b03f119c4d5b6b4/sphinx_rtd_theme-0.4.0.tar.gz"
+    sha256 "de88d637a60371d4f923e06b79c4ba260490c57d2ab5a8316942ab5d9a6ce1bf"
   end
 
   resource "typed-ast" do

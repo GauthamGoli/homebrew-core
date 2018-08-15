@@ -1,27 +1,29 @@
 class Php < Formula
   desc "General-purpose scripting language"
-  homepage "https://php.net/"
-  url "https://php.net/get/php-7.2.3.tar.xz/from/this/mirror"
-  sha256 "b3a94f1b562f413c0b96f54bc309706d83b29ac65d9b172bc7ed9fb40a5e651f"
+  homepage "https://secure.php.net/"
+  url "https://php.net/get/php-7.2.8.tar.xz/from/this/mirror"
+  sha256 "53ba0708be8a7db44256e3ae9fcecc91b811e5b5119e6080c951ffe7910ffb0f"
 
   bottle do
-    sha256 "39be15089755343b860c293f9c0c54d93f15185059ef5b6d539270355b41978d" => :high_sierra
-    sha256 "0bd906b8e2f7a52476e3cdfedf8db7d74cf27b1aad05db2793035ac918fd723a" => :sierra
-    sha256 "50b051315cb30e71020675f47559a4f6f75edc45b3150c7d82ad4778d5e1132b" => :el_capitan
+    sha256 "a1672a1e262cc8ba9091482ac16d8d23f75cdcbf50195aeda160a8d5e55da0b2" => :high_sierra
+    sha256 "64d538f3732b3671267dcdb2b2b785564b2301b0a3eb1c414d58edb603e5eef5" => :sierra
+    sha256 "693da1396df17c9b0628d8856985340249765f38b25ae95d227a751e4e45aec2" => :el_capitan
   end
 
+  depends_on "httpd" => [:build, :test]
   depends_on "pkg-config" => :build
+  depends_on "apr"
+  depends_on "apr-util"
   depends_on "argon2"
   depends_on "aspell"
+  depends_on "autoconf"
   depends_on "curl" if MacOS.version < :lion
   depends_on "freetds"
   depends_on "freetype"
   depends_on "gettext"
   depends_on "glib"
   depends_on "gmp"
-  depends_on "httpd"
   depends_on "icu4c"
-  depends_on "imap-uw"
   depends_on "jpeg"
   depends_on "libpng"
   depends_on "libpq"
@@ -66,6 +68,9 @@ class Php < Formula
     ENV.cxx11
 
     config_path = etc/"php/#{php_version}"
+    # Prevent system pear config from inhibiting pear install
+    (config_path/"pear.conf").delete if (config_path/"pear.conf").exist?
+
     # Prevent homebrew from harcoding path to sed shim in phpize script
     ENV["lt_cv_path_SED"] = "sed"
 
@@ -75,6 +80,7 @@ class Php < Formula
       --sysconfdir=#{config_path}
       --with-config-file-path=#{config_path}
       --with-config-file-scan-dir=#{config_path}/conf.d
+      --with-pear=#{pkgshare}/pear
       --enable-bcmath
       --enable-calendar
       --enable-dba
@@ -107,8 +113,6 @@ class Php < Formula
       --with-gettext=#{Formula["gettext"].opt_prefix}
       --with-gmp=#{Formula["gmp"].opt_prefix}
       --with-icu-dir=#{Formula["icu4c"].opt_prefix}
-      --with-imap=#{Formula["imap-uw"].opt_prefix}
-      --with-imap-ssl=#{Formula["openssl"].opt_prefix}
       --with-jpeg-dir=#{Formula["jpeg"].opt_prefix}
       --with-kerberos
       --with-layout=GNU
@@ -131,7 +135,6 @@ class Php < Formula
       --with-png-dir=#{Formula["libpng"].opt_prefix}
       --with-pspell=#{Formula["aspell"].opt_prefix}
       --with-sodium=#{Formula["libsodium"].opt_prefix}
-      --with-tidy
       --with-unixODBC=#{Formula["unixodbc"].opt_prefix}
       --with-webp-dir=#{Formula["webp"].opt_prefix}
       --with-xmlrpc
@@ -173,25 +176,8 @@ class Php < Formula
     end
   end
 
-  def caveats
-    <<~EOS
-      To enable PHP in Apache add the following to httpd.conf and restart Apache:
-          LoadModule php7_module #{opt_lib}/httpd/modules/libphp7.so
-
-          <FilesMatch \.php$>
-              SetHandler application/x-httpd-php
-          </FilesMatch>
-
-      Finally, check DirectoryIndex includes index.php
-          DirectoryIndex index.php index.html
-
-      The php.ini and php-fpm.ini file can be found in:
-          #{etc}/php/#{php_version}/
-    EOS
-  end
-
   def post_install
-    pear_prefix = share/"pear"
+    pear_prefix = pkgshare/"pear"
     pear_files = %W[
       #{pear_prefix}/.depdblock
       #{pear_prefix}/.filemap
@@ -218,6 +204,7 @@ class Php < Formula
 
     # fix pear config to install outside cellar
     pear_path = HOMEBREW_PREFIX/"share/pear"
+    cp_r pkgshare/"pear/.", pear_path
     {
       "php_ini" => etc/"php/#{php_version}/php.ini",
       "php_dir" => pear_path,
@@ -234,6 +221,8 @@ class Php < Formula
       value.mkpath if key =~ /(?<!bin|man)_dir$/
       system bin/"pear", "config-set", key, value, "system"
     end
+
+    system bin/"pear", "update-channels"
 
     %w[
       opcache
@@ -252,11 +241,28 @@ class Php < Formula
     end
   end
 
+  def caveats
+    <<~EOS
+      To enable PHP in Apache add the following to httpd.conf and restart Apache:
+          LoadModule php7_module #{opt_lib}/httpd/modules/libphp7.so
+
+          <FilesMatch \\.php$>
+              SetHandler application/x-httpd-php
+          </FilesMatch>
+
+      Finally, check DirectoryIndex includes index.php
+          DirectoryIndex index.php index.html
+
+      The php.ini and php-fpm.ini file can be found in:
+          #{etc}/php/#{php_version}/
+    EOS
+  end
+
   def php_version
     version.to_s.split(".")[0..1].join(".")
   end
 
-  plist_options :startup => true, :manual => "php-fpm"
+  plist_options :manual => "php-fpm"
 
   def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
@@ -280,7 +286,7 @@ class Php < Formula
         <string>#{var}/log/php-fpm.log</string>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
@@ -305,12 +311,17 @@ class Php < Formula
         <?php
         echo 'Hello world!';
       EOS
+      (testpath/"missingdotphp").write <<~EOS
+        <?php
+        echo 'Hello world!';
+      EOS
       main_config = <<~EOS
         Listen #{port}
         ServerName localhost:#{port}
         DocumentRoot "#{testpath}"
         ErrorLog "#{testpath}/httpd-error.log"
         ServerRoot "#{Formula["httpd"].opt_prefix}"
+        PidFile "#{testpath}/httpd.pid"
         LoadModule authz_core_module lib/httpd/modules/mod_authz_core.so
         LoadModule unixd_module lib/httpd/modules/mod_unixd.so
         LoadModule dir_module lib/httpd/modules/mod_dir.so
@@ -321,7 +332,7 @@ class Php < Formula
         #{main_config}
         LoadModule mpm_prefork_module lib/httpd/modules/mod_mpm_prefork.so
         LoadModule php7_module #{lib}/httpd/modules/libphp7.so
-        <FilesMatch \.(php|phar)$>
+        <FilesMatch \\.(php|phar)$>
           SetHandler application/x-httpd-php
         </FilesMatch>
       EOS
@@ -343,7 +354,7 @@ class Php < Formula
         LoadModule mpm_event_module lib/httpd/modules/mod_mpm_event.so
         LoadModule proxy_module lib/httpd/modules/mod_proxy.so
         LoadModule proxy_fcgi_module lib/httpd/modules/mod_proxy_fcgi.so
-        <FilesMatch \.(php|phar)$>
+        <FilesMatch \\.(php|phar)$>
           SetHandler "proxy:fcgi://127.0.0.1:#{port_fpm}"
         </FilesMatch>
       EOS
@@ -368,8 +379,10 @@ class Php < Formula
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
     ensure
-      Process.kill("TERM", pid)
-      Process.wait(pid)
+      if pid
+        Process.kill("TERM", pid)
+        Process.wait(pid)
+      end
       if fpm_pid
         Process.kill("TERM", fpm_pid)
         Process.wait(fpm_pid)

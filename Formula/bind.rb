@@ -1,15 +1,15 @@
 class Bind < Formula
   desc "Implementation of the DNS protocols"
   homepage "https://www.isc.org/downloads/bind/"
-  url "https://ftp.isc.org/isc/bind9/9.12.0/bind-9.12.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/dns/bind9/9.12.0/bind-9.12.0.tar.gz"
-  sha256 "29870e9bf9dcc31ead3793ca754a7b0236a0785a7a9dc0f859a0bc42e19b3c82"
-  head "https://source.isc.org/git/bind9.git"
+  url "https://ftp.isc.org/isc/bind9/9.12.2-P1/bind-9.12.2-P1.tar.gz"
+  version "9.12.2-P1"
+  sha256 "9c4b55c2b8a2052ce488ebaeca1b715721d1a6cbffd7da3634c41287b86954a4"
+  head "https://gitlab.isc.org/isc-projects/bind9.git"
 
   bottle do
-    sha256 "2e9e7021db9b2481d21fedae0da783e8ce8851446cd9bf952cf2473bda000cee" => :high_sierra
-    sha256 "4ba3299e7d563a64f1b8b937b4c24859e8cbb2627cb5aacd43478a20f3384698" => :sierra
-    sha256 "2bf6150639acd3d541a83d2bd90a7618c03257204fe97aea287c3dfb7e430684" => :el_capitan
+    sha256 "e5ebeb109f7b8a7d4063ca4f1cdf9495212c44f6b98a77e6d60f0d90521f290d" => :high_sierra
+    sha256 "94eb30f5412bc8cd5a4f3f9bcfb6442ddc36413d51c466c28d4309f83cd87d35" => :sierra
+    sha256 "32ea765d616c74641a37da18cef774a73aad2a8207c62e4247e9d1cf46d7b97e" => :el_capitan
   end
 
   depends_on "openssl"
@@ -110,7 +110,7 @@ class Bind < Formula
                     print-time yes;
             };
     };
-    EOS
+  EOS
   end
 
   def localhost_zone; <<~EOS
@@ -125,7 +125,7 @@ class Bind < Formula
 
                 1D IN NS    @
                 1D IN A        127.0.0.1
-    EOS
+  EOS
   end
 
   def named_local; <<~EOS
@@ -139,7 +139,7 @@ class Bind < Formula
                   IN      NS      localhost.
 
     1       IN      PTR     localhost.
-    EOS
+  EOS
   end
 
   plist_options :startup => true
@@ -166,7 +166,7 @@ class Bind < Formula
       <false/>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
