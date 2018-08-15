@@ -5,8 +5,8 @@ class Kontena < Formula
 
   stable do
     url "https://github.com/kontena/kontena.git",
-        :tag => "v1.5.1",
-        :revision => "ac6406ad3b78ad53871f5657e9404a12b6b3e2f8"
+        :tag => "v1.5.4",
+        :revision => "8d68c77012f4de770c9e14653d5db63c64fac83f"
 
     resource "clamp" do
       url "https://rubygems.org/gems/clamp-1.2.1.gem"
@@ -140,10 +140,9 @@ class Kontena < Formula
   end
 
   bottle do
-    cellar :any
-    sha256 "f5a632dac647b1f767272cdeec14af150c0a4f071f7082be10a65e7cd486e053" => :high_sierra
-    sha256 "10c6820ed232adc223ebdda22d0281e3547a49eee84030b623a5ee3f895a017e" => :sierra
-    sha256 "a674ccf29205f06867a9145fdc5e09a4bc3bf4cd2f475745828efb60a4961c12" => :el_capitan
+    sha256 "3cf1b8ba751a53d3db948cd92a24e6e7ccf50f92be34df053c44bcfd42ce1b1a" => :high_sierra
+    sha256 "52ed5b767e77161f2e8857e34e22f7e86db5ff35a5ad45724399ec60ccfe5f41" => :sierra
+    sha256 "4f875785a3849869b78bf9788d7c3949dd20ce8fdb027f1e0380ec7f8f190719" => :el_capitan
   end
 
   depends_on "ruby" if MacOS.version <= :sierra
@@ -187,10 +186,11 @@ class Kontena < Formula
   test do
     assert_match "+homebrew", shell_output("#{bin}/kontena --version")
     assert_match "login", shell_output("#{bin}/kontena complete kontena master")
-    output = shell_output("#{bin}/kontena plugin search digitalocean")
-    assert_match "Kontena DigitalOcean plugin", output
-    output = shell_output("#{bin}/kontena stack reg show kontena/hello-world")
-    assert_match "description: Sample stack to test Kontena", output
+    test_yaml = "stack: test/test\nversion: 0.1.0\nservices:\n  redis:\n    image: redis:latest\n"
+    (testpath/"kontena.yml").write(test_yaml)
+    output = shell_output("#{bin}/kontena stack validate --format api-json")
+    assert_match "\"stack\": \"test/test\"", output
+    assert_match "\"expose\": null", output
     assert_match "NAME", shell_output("#{bin}/kontena master list")
   end
 end

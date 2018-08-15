@@ -1,16 +1,15 @@
 class Opencoarrays < Formula
   desc "Open-source coarray Fortran ABI, API, and compiler wrapper"
   homepage "http://opencoarrays.org"
-  url "https://github.com/sourceryinstitute/OpenCoarrays/releases/download/1.9.3/OpenCoarrays-1.9.3.tar.gz"
-  sha256 "58502575c74ca079611abab1cf184b26076cb19a478113ce04a0f2cf1a607b45"
-  revision 1
+  url "https://github.com/sourceryinstitute/OpenCoarrays/releases/download/2.2.0/OpenCoarrays-2.2.0.tar.gz"
+  sha256 "9311547a85a21853111f1e8555ceab4593731c6fd9edb64cfb9588805f9d1a0d"
   head "https://github.com/sourceryinstitute/opencoarrays.git"
 
   bottle do
     cellar :any
-    sha256 "8cb6fdf809777301249117c34513cc7c805c1b510bbf96168b81b8a24f906854" => :high_sierra
-    sha256 "33a10f9069f02fc0140288ca8879e84e31abc347275394db6a87735c9ad11613" => :sierra
-    sha256 "598e4640c510c188880db3d829834cbde0c37df5fee679e32e8e1549e84a471e" => :el_capitan
+    sha256 "557e283bc36c7972b556582e701092933c22d6b505d61375d5afd070c84f47a0" => :high_sierra
+    sha256 "af7efdd22b641b3647f621f016c67df1e3ce701c8294f2909e5067864c300f5e" => :sierra
+    sha256 "804c9a433b4dead350974f71169eedc388ad485b9a7d038ca71b5bea462a3d32" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -47,6 +46,6 @@ class Opencoarrays < Formula
       end program
     EOS
     system "#{bin}/caf", "tally.f90", "-o", "tally"
-    system "#{bin}/cafrun", "-np", "3", "./tally"
+    system "#{bin}/cafrun", "-np", "3", "--oversubscribe", "./tally"
   end
 end

@@ -5,14 +5,14 @@ class Httpie < Formula
   homepage "https://httpie.org/"
   url "https://files.pythonhosted.org/packages/28/93/4ebf2de4bc74bd517a27a600b2b23a5254a20f28e6e36fc876fd98f7a51b/httpie-0.9.9.tar.gz"
   sha256 "f1202e6fa60367e2265284a53f35bfa5917119592c2ab08277efc7fffd744fcb"
-  revision 2
+  revision 4
   head "https://github.com/jkbrzt/httpie.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "3c3821ba34e84238ef005f6d5a347492d2f448ac1967707fee0c0c9b8acd8553" => :high_sierra
-    sha256 "4c4809ad4de65c845c88f1a4e6802b4cf8ddf3e7a7553847fe72ca46c9c87b6c" => :sierra
-    sha256 "f372080a58a768ef470eb18fa4e1f14b710c27f7a7107a2c03253284663e8546" => :el_capitan
+    sha256 "437504a11416284b17d3a801c267d0fd5e15416f38cff3abf7ed99b096b4828a" => :high_sierra
+    sha256 "10b25fc787076719b1f1f9c242c5e9d872ebd1c7a6d83e6f1af983a17cd8ca55" => :sierra
+    sha256 "1bd35480d1ef401bdad9c322e7c1624aefc9b5056530ab990e327d0bc397e4fb" => :el_capitan
   end
 
   depends_on "python"

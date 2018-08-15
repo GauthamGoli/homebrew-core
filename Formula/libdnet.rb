@@ -20,7 +20,7 @@ class Libdnet < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
-  depends_on "python@2" if MacOS.version <= :snow_leopard
+  depends_on "python@2"
 
   def install
     # autoreconf to get '.dylib' extension on shared lib
@@ -32,5 +32,9 @@ class Libdnet < Formula
                           "--mandir=#{man}",
                           "--with-python"
     system "make", "install"
+  end
+
+  test do
+    system "#{bin}/dnet-config", "--version"
   end
 end

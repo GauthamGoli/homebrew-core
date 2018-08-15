@@ -1,27 +1,25 @@
 class Pygobject3 < Formula
   desc "GNOME Python bindings (based on GObject Introspection)"
-  homepage "https://live.gnome.org/PyGObject"
-  url "https://download.gnome.org/sources/pygobject/3.26/pygobject-3.26.1.tar.xz"
-  sha256 "f5577b9b9c70cabb9a60d81b855d488b767c66f867432e7fb64aa7269b04d1a9"
+  homepage "https://wiki.gnome.org/Projects/PyGObject"
+  url "https://download.gnome.org/sources/pygobject/3.28/pygobject-3.28.3.tar.xz"
+  sha256 "3dd3e21015d06e00482ea665fc1733b77e754a6ab656a5db5d7f7bfaf31ad0b0"
+  revision 1
 
   bottle do
     cellar :any
-    rebuild 1
-    sha256 "9bada550c6806e5f89394a760bd35614de8210490f5c788aa5ff8dacf4393247" => :high_sierra
-    sha256 "2a44945bb6d8c0f58856b1812c4e8a2232341ab022d433ea6734e742587894e3" => :sierra
-    sha256 "dfff2dc9f1e74b0320cf53e11966c84a5b54136d51874f2b3563ef5be031ccaf" => :el_capitan
+    sha256 "47aa7d49c32d6805573f84732d9f0a1ff2d88547493b0d7ee2eaa09bdeacbdcb" => :high_sierra
+    sha256 "c667c8ad161a8c3a3b86eeb7e74a499d3d0208b216a104211b5714f590525d7c" => :sierra
+    sha256 "d9a345b4bda8c9f669377486bd661332a5ece0e9cc429f59189356167733584b" => :el_capitan
   end
 
-  option "without-python@2", "Build without python2 support"
-
-  deprecated_option "with-python3" => "with-python"
-  deprecated_option "without-python" => "without-python@2"
+  option "without-python", "Build without python3 support"
+  option "with-python@2", "Build with python2 support"
 
   depends_on "pkg-config" => :build
   depends_on "libffi" => :optional
   depends_on "glib"
-  depends_on "python@2" if MacOS.version <= :snow_leopard
-  depends_on "python" => :optional
+  depends_on "python@2" => :optional
+  depends_on "python" => :recommended
   depends_on "py2cairo" if build.with? "python@2"
   depends_on "py3cairo" if build.with? "python"
   depends_on "gobject-introspection"
