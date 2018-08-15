@@ -1,13 +1,13 @@
 class PostgresqlAT95 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v9.5.12/postgresql-9.5.12.tar.bz2"
-  sha256 "02e86f5c66467731bbec18fde96e0daf38c13c9141d8e7d41be663ab6fa6f698"
+  url "https://ftp.postgresql.org/pub/source/v9.5.14/postgresql-9.5.14.tar.bz2"
+  sha256 "3e2cd5ea0117431f72c9917c1bbad578ea68732cb284d1691f37356ca0301a4d"
 
   bottle do
-    sha256 "1ed23f0045effafaf07e70fd2b6be4e208442b3e7d5e1ccd41c5fe646a7ca015" => :high_sierra
-    sha256 "ad1e29a3e881ee32d80f97160dbf02f7d622bd810fc0884042fdd90eff5d58a7" => :sierra
-    sha256 "bf4406afae1d3ab106f16290122fce0c32ed237da44bf07da60b482b7840027d" => :el_capitan
+    sha256 "2de49b45cb095b3f6496bd1b419ae4259290533ec121ca6c21d697c7c4cf1f90" => :high_sierra
+    sha256 "2eff09a3882395cc5977e44d0b30034e2d0a0d5efd28a919b0f0619cad68b407" => :sierra
+    sha256 "eedf1f4356caddb999721ef77fa5c6ebd9b628001de31eb499658bbfb08b3046" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -106,7 +106,7 @@ class PostgresqlAT95 < Formula
 
       You will need your previous PostgreSQL installation from brew to perform `pg_upgrade`.
       Do not run `brew cleanup postgresql@9.5` until you have performed the migration.
-    EOS
+  EOS
   end
 
   plist_options :manual => "pg_ctl -D #{HOMEBREW_PREFIX}/var/postgresql@9.5 start"
@@ -134,7 +134,7 @@ class PostgresqlAT95 < Formula
       <string>#{var}/log/#{name}.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

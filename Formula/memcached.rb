@@ -1,14 +1,14 @@
 class Memcached < Formula
   desc "High performance, distributed memory object caching system"
   homepage "https://memcached.org/"
-  url "https://www.memcached.org/files/memcached-1.5.6.tar.gz"
-  sha256 "9675ee859d7d81f7a950f190a6812720b26f08228d356044ec517d4d5af25f03"
+  url "https://www.memcached.org/files/memcached-1.5.10.tar.gz"
+  sha256 "494c060dbd96d546c74ab85a3cc3984d009b4423767ac33e05dd2340c01f1c4b"
 
   bottle do
     cellar :any
-    sha256 "d4ae06c664323f252a5f199e391e9b138746879a1e309c81ae3bc76d06468ec7" => :high_sierra
-    sha256 "08be8c4acf1f259bdf639696135d6dd117fa0e7d517c8deb5cc9efaf771b1c18" => :sierra
-    sha256 "c101b4e90d93ba79d2581a326aa8f694befeebc1361584789c0ca46ffe8fbb04" => :el_capitan
+    sha256 "ba8b0c7f203ff7ede121e203892954a89f61301b80ee125765d9bccb6ebcf6d1" => :high_sierra
+    sha256 "8384be73e4438e6f2eeeb7453ac82b3ff69f90751a4d1aef645e81851acb11ad" => :sierra
+    sha256 "b6e99933a3d05cb414dedea4408457a5d4331d9a27ac8d696fe6bfbdb523d0d2" => :el_capitan
   end
 
   option "with-sasl", "Enable SASL support -- disables ASCII protocol!"
@@ -53,7 +53,7 @@ class Memcached < Formula
       <string>#{HOMEBREW_PREFIX}</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

@@ -1,15 +1,15 @@
 class Pyqt < Formula
   desc "Python bindings for v5 of Qt"
   homepage "https://www.riverbankcomputing.com/software/pyqt/download5"
-  url "https://dl.bintray.com/homebrew/mirror/pyqt-5.10.tar.gz"
-  mirror "https://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.10/PyQt5_gpl-5.10.tar.gz"
-  sha256 "342fe6675df8ba9fabb3f3cc5d79ebc24714cd9bd1a3b5c8ab5dba7596f15f50"
+  url "https://dl.bintray.com/homebrew/mirror/pyqt-5.10.1.tar.gz"
+  mirror "https://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.10.1/PyQt5_gpl-5.10.1.tar.gz"
+  sha256 "9932e971e825ece4ea08f84ad95017837fa8f3f29c6b0496985fa1093661e9ef"
   revision 1
 
   bottle do
-    sha256 "c561f62f9269cba362de568ca213ba48ec7d48705cd7ef4315cd7c7be68f24b8" => :high_sierra
-    sha256 "d987ad118b3bd30680ac7a73be53f8f2045ebfd87b969b5a6fabe02b12e3bd31" => :sierra
-    sha256 "cba364e5aa9a3812895744a344cb9f82f9d8c838ccf8b832ca6cf1be1b664367" => :el_capitan
+    sha256 "7098976f9222b541929b63e50038127b85263c1b820186b79fe011d559a1d4aa" => :high_sierra
+    sha256 "692d8ce2949fcc4258818c68dbf142bdc5b1a22a98af99bcdac2a321d0b79ea0" => :sierra
+    sha256 "17ae485e79a5b3e35f0a09bcb3862239517218ebeae10850d7804d49edc1d839" => :el_capitan
   end
 
   option "with-debug", "Build with debug symbols"
@@ -21,6 +21,13 @@ class Pyqt < Formula
   depends_on "sip"
   depends_on "python" => :recommended
   depends_on "python@2" => :recommended
+
+  # Patch from openSUSE for compatibility with Qt 5.11.0
+  # https://build.opensuse.org/package/show/home:cgiboudeaux:branches:KDE:Qt5/python-qt5
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/4f563668/pyqt/qt-5.11.diff"
+    sha256 "34bba97f87615ea072312bfc03c4d3fb0a1cf7a4cd9d6907857c1dca6cc89200"
+  end
 
   def install
     Language::Python.each_python(build) do |python, version|

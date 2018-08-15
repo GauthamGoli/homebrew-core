@@ -1,29 +1,31 @@
 class Libepoxy < Formula
   desc "Library for handling OpenGL function pointer management"
   homepage "https://github.com/anholt/libepoxy"
-  url "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.0.tar.xz"
-  sha256 "4c94995398a6ebf691600dda2e9685a0cac261414175c2adf4645cdfab42a5d5"
+  url "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.2.tar.xz"
+  sha256 "a9562386519eb3fd7f03209f279f697a8cba520d3c155d6e253c3e138beca7d8"
 
   bottle do
     cellar :any
-    sha256 "8dbf581a8aeb28519e01a5aaa0252c2e481e39ec68dc276c41f24587bd1c65d5" => :high_sierra
-    sha256 "b8c65448d0138aff07d2e212f3126ef34c07acfbddbc8aa0209e0c03266b5f0a" => :sierra
-    sha256 "dbc091d5cf4ee61bf77d7f9a1eea35248386a3e6d45149a2bfc7b18b50d94ef2" => :el_capitan
+    sha256 "0748efd9737fe67c0b55dc6b21b927e20b3e816eb44813b99d76b2c1dd301008" => :high_sierra
+    sha256 "815b406da30c03dc46621d217e5fd0e2b7de30194f455943e214afa397dc68bc" => :sierra
+    sha256 "a1d5c559a7a5c84316b2adb75fab79297b27ecb301bf60ef6cd69baf8a367158" => :el_capitan
   end
 
-  depends_on "meson" => :build
+  depends_on "meson-internal" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@2" => :build if MacOS.version <= :snow_leopard
-
-  # submitted upstream at https://github.com/anholt/libepoxy/pull/156
-  patch :DATA
+  depends_on "python@2" => :build
 
   def install
+    # Fix "Couldn't open libOpenGL.so.0: dlopen(libOpenGL.so.0, 5): image not found"
+    # Reported 29 May 2018 https://github.com/anholt/libepoxy/issues/176
+    inreplace "src/dispatch_common.c", '#define OPENGL_LIB "libOpenGL.so.0"', ""
+
+    ENV.refurbish_args
+
     mkdir "build" do
       system "meson", "--prefix=#{prefix}", ".."
       system "ninja"
-      system "ninja", "test"
       system "ninja", "install"
     end
   end
@@ -56,18 +58,3 @@ class Libepoxy < Formula
     system "./test"
   end
 end
-
-__END__
-diff --git a/src/meson.build b/src/meson.build
-index 3401075..23cd173 100644
---- a/src/meson.build
-+++ b/src/meson.build
-@@ -93,7 +93,7 @@ epoxy_has_wgl = build_wgl ? '1' : '0'
- # not needed when building Epoxy; we do want to add them to the generated
- # pkg-config file, for consumers of Epoxy
- gl_reqs = []
--if gl_dep.found()
-+if gl_dep.found() and host_system != 'darwin'
-   gl_reqs += 'gl'
- endif
- if build_egl and egl_dep.found()

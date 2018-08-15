@@ -1,14 +1,14 @@
 class KnotResolver < Formula
   desc "Minimalistic, caching, DNSSEC-validating DNS resolver"
   homepage "https://www.knot-resolver.cz"
-  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-2.1.1.tar.xz"
-  sha256 "0b9caee03d7cd30e1dc8fa0ce5fafade31fc1785314986bbf77cad446522a1b3"
+  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-2.4.1.tar.xz"
+  sha256 "e8044316cd897ad29b3c5284de06652e1568c4d5861e3147ec2191fbacd8d9ff"
   head "https://gitlab.labs.nic.cz/knot/knot-resolver.git"
 
   bottle do
-    sha256 "3d2b707a891ad52c030b66838a3a225f71fe40009ff875699348cab7ed277b81" => :high_sierra
-    sha256 "22636fca91f0b746463096787eeb4d1e7fe7e65d9e50b5ddaadd4398793e5ed9" => :sierra
-    sha256 "c4e78f850f2261f256c0b723cf7f8c1000229593d61e6cac57e52644f1dd548b" => :el_capitan
+    sha256 "118e08e55cb9e2cd6c37b6631b842214ff38d62f5a6020a7afc3a08c1758ca80" => :high_sierra
+    sha256 "27c36c964efda256d661a7f3c91d5d44f281b4cec9eb35430602abaea9e07a86" => :sierra
+    sha256 "41b1cd73550b8c1d48945f29f52f0aa09cc23cf3e43267858b419570b9a92016" => :el_capitan
   end
 
   option "without-nettle", "Compile without DNS cookies support"
@@ -51,7 +51,7 @@ class KnotResolver < Formula
   def root_keys; <<~EOS
     . IN DS 19036 8 2 49aac11d7b6f6446702e54a1607371607a1a41855200fd2ce1cdde32f24e8fb5
     . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
-    EOS
+  EOS
   end
 
   plist_options :startup => true
@@ -81,7 +81,7 @@ class KnotResolver < Formula
       <string>#{var}/log/kresd.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

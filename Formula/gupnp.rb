@@ -1,14 +1,14 @@
 class Gupnp < Formula
   desc "Framework for creating UPnP devices and control points"
   homepage "https://wiki.gnome.org/Projects/GUPnP"
-  url "https://download.gnome.org/sources/gupnp/1.0/gupnp-1.0.2.tar.xz"
-  sha256 "5173fda779111c6b01cd4a5e41b594322be9d04f8c74d3361f0a0c2069c77610"
+  url "https://download.gnome.org/sources/gupnp/1.0/gupnp-1.0.3.tar.xz"
+  sha256 "794b162ee566d85eded8c3f3e8c9c99f6b718a6b812d8b56f0c2ed72ac37cbbb"
 
   bottle do
-    sha256 "637290bee0b95267d9d900afbb081b437b89d2b4d353724fa492e52ba25627b2" => :high_sierra
-    sha256 "28afff235b826e62bfd7133394b91a4b3746c3bf591efb5eb35767978e6e5f9a" => :sierra
-    sha256 "122ab1bd5cd7864e3ba5e8242d62fc4d1a46fe3827801751c967c4877958a19d" => :el_capitan
-    sha256 "c75c47821df5392618b6ce7f438f509e5c6833fe7f60f6657b3081adf537da37" => :yosemite
+    cellar :any
+    sha256 "a89d7df0d7f7b89bb3b2218445c908497a9ab9e0d61a4c5d6b56d4fcbf265f65" => :high_sierra
+    sha256 "5bd40488125dc5c85ea820941128948bbd0cfcf040d26e0871128a62efbc1c52" => :sierra
+    sha256 "1af28d4893393c049714b924eb012c6c2554d8ddf3acf95d9b765ef74fe6f6d3" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
