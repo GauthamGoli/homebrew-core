@@ -2,16 +2,15 @@
 class Macvim < Formula
   desc "GUI for vim, made for macOS"
   homepage "https://github.com/macvim-dev/macvim"
-  url "https://github.com/macvim-dev/macvim/archive/snapshot-145.tar.gz"
-  version "8.0-145"
-  sha256 "37ea193345421ea17731fe2a06806641ef6607d38829b195b596179f70810ce2"
-  revision 1
+  url "https://github.com/macvim-dev/macvim/archive/snapshot-150.tar.gz"
+  version "8.1-150"
+  sha256 "28a154a87d1a2e93f167fff5f172b198f76d2b9181512c353ae5063d28cac22b"
   head "https://github.com/macvim-dev/macvim.git"
 
   bottle do
-    sha256 "f770fe472b20f19db30360e8909b835dcedb1d9b964dd5139515ca9aa87ce277" => :high_sierra
-    sha256 "1f1644ba8ee73eed04bbe0bee33a0e619b715a6b5d5dca29cc6d438b66c5d9c2" => :sierra
-    sha256 "f730cf482711ef5204b6690de9feaebbc7a0457768926bcd7ee334b3e2677054" => :el_capitan
+    sha256 "38fcf5a427a733a722db7f670b6b72797ac7631e3ed2dfc1d91a0923f20807e1" => :high_sierra
+    sha256 "2253ebf6e817f6faf11943774938c49f7a7c877906deeb8f0f565364ee18ee9b" => :sierra
+    sha256 "33c64c3172b4772b52e9ebdd335b0d2bbdad52b895e5b469bda10d5fd14b39d8" => :el_capitan
   end
 
   option "with-override-system-vim", "Override system vim"
@@ -116,6 +115,12 @@ class Macvim < Formula
     if build.with? "python"
       py3_exec_prefix = Utils.popen_read("python3-config", "--exec-prefix")
       assert_match py3_exec_prefix.chomp, output
+      (testpath/"commands.vim").write <<~EOS
+        :python3 import vim; vim.current.buffer[0] = 'hello python3'
+        :wq
+      EOS
+      system bin/"mvim", "-v", "-T", "dumb", "-s", "commands.vim", "test.txt"
+      assert_equal "hello python3", (testpath/"test.txt").read.chomp
     end
   end
 end

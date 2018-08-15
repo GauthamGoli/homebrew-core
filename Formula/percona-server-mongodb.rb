@@ -1,34 +1,53 @@
 class PerconaServerMongodb < Formula
   desc "Drop-in MongoDB replacement"
   homepage "https://www.percona.com"
-  url "https://www.percona.com/downloads/percona-server-mongodb-3.4/percona-server-mongodb-3.4.9-2.9/source/tarball/percona-server-mongodb-3.4.9-2.9.tar.gz"
-  version "3.4.9-2.9"
-  sha256 "489675e6568dfcdc842d12872e552f0cd1ea5b2db2b6fe5d6548216c494778ba"
+  url "https://www.percona.com/downloads/percona-server-mongodb-3.6/percona-server-mongodb-3.6.6-1.4/source/tarball/percona-server-mongodb-3.6.6-1.4.tar.gz"
+  version "3.6.6-1.4"
+  sha256 "a30d3932c449b61df049807a51d7fbaf6c3534b68116e82829f63049dff69d2a"
 
   bottle do
-    rebuild 1
-    sha256 "396da20f15f3e074496e159c49fb12ef0a412a891eafec0cd15edd7e2d54d5fb" => :high_sierra
-    sha256 "08266faa60f1b18830d269250c94f36cd808fc3915935159803366199ed8c97c" => :sierra
-    sha256 "7cf6b6ffd202ab5dfe1054b2128b5795706d67340b6acaa8311e23d0af8c8bd5" => :el_capitan
+    sha256 "a6649a385a19ab31d07d50c45779aea87bbd8ea149b099d57975859a6cb546ce" => :high_sierra
+    sha256 "62478907290b11c522b15b06ceb4038a0244f90d2ac2da2587534f3fcb476707" => :sierra
   end
 
   option "with-boost", "Compile using installed boost, not the version shipped with this formula"
   option "with-sasl", "Compile with SASL support"
 
+  depends_on "pkg-config" => :build
   depends_on "boost" => :optional
   depends_on "go" => :build
-  depends_on :macos => :mountain_lion
+  depends_on :macos => :sierra
   depends_on "scons" => :build
   depends_on "openssl" => :recommended
 
   conflicts_with "mongodb",
     :because => "percona-server-mongodb and mongodb install the same binaries."
 
-  needs :cxx11
+  resource "Cheetah" do
+    url "https://files.pythonhosted.org/packages/cd/b0/c2d700252fc251e91c08639ff41a8a5203b627f4e0a2ae18a6b662ab32ea/Cheetah-2.4.4.tar.gz"
+    sha256 "be308229f0c1e5e5af4f27d7ee06d90bb19e6af3059794e5fd536a6f29a9b550"
+  end
+
+  resource "PyYAML" do
+    url "https://files.pythonhosted.org/packages/9e/a3/1d13970c3f36777c583f136c136f804d70f500168edc1edea6daa7200769/PyYAML-3.13.tar.gz"
+    sha256 "3ef3092145e9b70e3ddd2c7ad59bdd0252a94dfe3949721633e41344de00a6bf"
+  end
+
+  resource "typing" do
+    url "https://files.pythonhosted.org/packages/ec/cc/28444132a25c113149cec54618abc909596f0b272a74c55bab9593f8876c/typing-3.6.4.tar.gz"
+    sha256 "d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2"
+  end
 
   def install
-    ENV.cxx11 if MacOS.version < :mavericks
-    ENV.libcxx if build.devel?
+    ["Cheetah", "PyYAML", "typing"].each do |r|
+      resource(r).stage do
+        system "python", *Language::Python.setup_install_args(buildpath/"vendor")
+      end
+    end
+
+    (buildpath/".brew_home/Library/Python/2.7/lib/python/site-packages/vendor.pth").write <<~EOS
+      import site; site.addsitedir("#{buildpath}/vendor/lib/python2.7/site-packages")
+    EOS
 
     # New Go tools have their own build script but the server scons "install" target is still
     # responsible for installing them.
@@ -57,7 +76,6 @@ class PerconaServerMongodb < Formula
     args = %W[
       --prefix=#{prefix}
       -j#{ENV.make_jobs}
-      --osx-version-min=#{MacOS.version}
     ]
 
     args << "CC=#{ENV.cc}"
@@ -132,7 +150,7 @@ class PerconaServerMongodb < Formula
       </dict>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

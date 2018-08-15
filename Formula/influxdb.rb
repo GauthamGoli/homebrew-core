@@ -2,14 +2,15 @@ class Influxdb < Formula
   desc "Time series, events, and metrics database"
   homepage "https://influxdata.com/time-series-platform/influxdb/"
   url "https://github.com/influxdata/influxdb.git",
-      :tag => "v1.4.3",
-      :revision => "60d27e6995558f38a39e90b35a92cbac080310a3"
+      :tag => "v1.6.1",
+      :revision => "5766854b95ae86cccf6cc8ffe4c5bb9eacc994b8"
   head "https://github.com/influxdata/influxdb.git"
 
   bottle do
-    sha256 "1b188d586479bed82b8d19480dc0c7035eb49e2a5d81c3f48c59d2895c454178" => :high_sierra
-    sha256 "1589944237250658e7dc04b6c3e33d5cbc238dfa3349d49f5da1a12a73f7bcae" => :sierra
-    sha256 "8be7a9019b1ab932a9829278586045e145210fe7f3b25e21d6af3b9f24dcf7df" => :el_capitan
+    cellar :any_skip_relocation
+    sha256 "1939a952dd1bb623a9fa8e388e50b6f5062970475f35abe791eae5aaacee182d" => :high_sierra
+    sha256 "0da1f369e02bdeac1c61c572183cabf3bde91e4b3323903e0655dcb2b3e2da4f" => :sierra
+    sha256 "20e545b5ad265253f90e13afe004c89fbca03a1232c852d9400cd1413c41a6f9" => :el_capitan
   end
 
   depends_on "gdm" => :build
@@ -82,7 +83,7 @@ class Influxdb < Formula
         </dict>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

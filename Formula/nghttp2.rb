@@ -1,13 +1,13 @@
 class Nghttp2 < Formula
   desc "HTTP/2 C Library"
   homepage "https://nghttp2.org/"
-  url "https://github.com/nghttp2/nghttp2/releases/download/v1.31.0/nghttp2-1.31.0.tar.xz"
-  sha256 "36573c2dc74f0da872b02a3ccf1f1419d6b992dd4703dc866e5a289d36397ac7"
+  url "https://github.com/nghttp2/nghttp2/releases/download/v1.32.0/nghttp2-1.32.0.tar.xz"
+  sha256 "700a89d59fcc55acc2b18184001bfb3220fa6a6e543486aca35f40801cba6f7d"
 
   bottle do
-    sha256 "68df2e5d01922df3b756e173bf14f17963948bc6a042d91c6a46030a1642cee8" => :high_sierra
-    sha256 "cc35f4a95b57efa63a837cab62678f8c015755ff79200787e76f147b2c72560e" => :sierra
-    sha256 "fee924a6d7490c0fc9b9d95923f2d49b9794a9f394770d643a9ee1539055b8c7" => :el_capitan
+    sha256 "cd337b391fc2e5cd72bb3ce098386d6fd7d4d161179ce752e85fc41e23893556" => :high_sierra
+    sha256 "4dd6b26912e4aa678fadfe93f0c1eb5816731897bd4b11ec1ef72eafb9afba13" => :sierra
+    sha256 "1263885aed89fa20026d040df3262d987aa336f6ac0ad18273f7566d20815d23" => :el_capitan
   end
 
   head do
@@ -37,8 +37,8 @@ class Nghttp2 < Formula
   depends_on "jemalloc" => :recommended
 
   resource "Cython" do
-    url "https://files.pythonhosted.org/packages/ee/2a/c4d2cdd19c84c32d978d18e9355d1ba9982a383de87d0fcb5928553d37f4/Cython-0.27.3.tar.gz"
-    sha256 "6a00512de1f2e3ce66ba35c5420babaef1fe2d9c43a8faab4080b0dbcc26bc64"
+    url "https://files.pythonhosted.org/packages/79/9d/dea8c5181cdb77d32e20a44dd5346b0e4bac23c4858f2f66ad64bbcf4de8/Cython-0.28.2.tar.gz"
+    sha256 "634e2f10fc8d026c633cffacb45cd8f4582149fa68e1428124e762dbc566e68a"
   end
 
   # https://github.com/tatsuhiro-t/nghttp2/issues/125
@@ -59,6 +59,8 @@ class Nghttp2 < Formula
     ]
 
     args << "--enable-examples" if build.with? "examples"
+    # requires thread-local storage features only available in 10.11+
+    args << "--disable-threads" if MacOS.version < :el_capitan
     args << "--with-xml-prefix=/usr" if MacOS.version > :lion
     args << "--without-jemalloc" if build.without? "jemalloc"
 

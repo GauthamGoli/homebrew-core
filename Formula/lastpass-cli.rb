@@ -1,16 +1,16 @@
 class LastpassCli < Formula
   desc "LastPass command-line interface tool"
   homepage "https://github.com/lastpass/lastpass-cli"
-  url "https://github.com/lastpass/lastpass-cli/archive/v1.2.2.tar.gz"
-  sha256 "26c93ae610932139dacaff2e0f916c5628def48bb4129b4099101cf4e6c7c499"
+  url "https://github.com/lastpass/lastpass-cli/archive/v1.3.1.tar.gz"
+  sha256 "25dc9a0c99a10ee70b5b3991d525448c25f312cc69fa0216d7ac70c4ae384b1b"
   head "https://github.com/lastpass/lastpass-cli.git"
 
   bottle do
     cellar :any
     rebuild 1
-    sha256 "ec24db20d729545039bc5966086486eedb0491736a6d6cb1f4b534ce7e537aeb" => :high_sierra
-    sha256 "13c003b786d04d64780e05d925d0b9438b81b295480cbb29079927ad4453d600" => :sierra
-    sha256 "6417a0b427f60634240fa5c06a2c33cb06187b76b1ff4c0f611a370f0fb6dd12" => :el_capitan
+    sha256 "5839bd81ab06a2ba928e206ee625d5b4c63f5ad52f0cd0d3205c7989cb077138" => :high_sierra
+    sha256 "6dbb3753199894a941659b6347f6a4d85d3163f6b3718344e69977a780b2018e" => :sierra
+    sha256 "038ed9da9bbe031fdfaa50d612b2952c6c2f67fc83ef44da76ef7f447cf14964" => :el_capitan
   end
 
   depends_on "asciidoc" => :build
@@ -26,6 +26,7 @@ class LastpassCli < Formula
     system "make", "MANDIR=#{man}", "install-doc"
 
     bash_completion.install "contrib/lpass_bash_completion"
+    zsh_completion.install "contrib/lpass_zsh_completion" => "_lpass"
     fish_completion.install "contrib/completions-lpass.fish"
   end
 

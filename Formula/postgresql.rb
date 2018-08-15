@@ -1,14 +1,14 @@
 class Postgresql < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v10.3/postgresql-10.3.tar.bz2"
-  sha256 "6ea268780ee35e88c65cdb0af7955ad90b7d0ef34573867f223f14e43467931a"
+  url "https://ftp.postgresql.org/pub/source/v10.5/postgresql-10.5.tar.bz2"
+  sha256 "6c8e616c91a45142b85c0aeb1f29ebba4a361309e86469e0fb4617b6a73c4011"
   head "https://github.com/postgres/postgres.git"
 
   bottle do
-    sha256 "632a988ae9a6b45acd3fca3f05af7dbec02e01fa91814ff8ba238cc20d1a7f38" => :high_sierra
-    sha256 "c5412eb34006856a6f0aca2ca2c69e2b8da706f1c6a6aae200aa81d0cda23207" => :sierra
-    sha256 "0581e9efe089864abbcc938f70a5175ff5595ffd701062bafec0be041ba56258" => :el_capitan
+    sha256 "9f657c1da00a6fe27549b47e63c1c4eb1e805f123a6e9fd633eea231e207908f" => :high_sierra
+    sha256 "16300cc113408922aa4b217eb88c01a89be7ea49493d5ed7ef2456573a048782" => :sierra
+    sha256 "80f8dd999aa719e37c12243cfc9388690741a290099c36e49bba2290c5a253a1" => :el_capitan
   end
 
   option "without-perl", "Build without Perl support"
@@ -22,6 +22,8 @@ class Postgresql < Formula
   deprecated_option "enable-dtrace" => "with-dtrace"
   deprecated_option "with-python3" => "with-python"
 
+  depends_on "pkg-config" => :build
+  depends_on "icu4c"
   depends_on "openssl"
   depends_on "readline"
 
@@ -58,6 +60,7 @@ class Postgresql < Formula
       --with-pam
       --with-libxml
       --with-libxslt
+      --with-icu
     ]
 
     args << "--with-perl" if build.with? "perl"
@@ -102,7 +105,7 @@ class Postgresql < Formula
   def caveats; <<~EOS
     To migrate existing data from a previous major version of PostgreSQL run:
       brew postgresql-upgrade-database
-    EOS
+  EOS
   end
 
   plist_options :manual => "pg_ctl -D #{HOMEBREW_PREFIX}/var/postgres start"
@@ -132,7 +135,7 @@ class Postgresql < Formula
       <string>#{var}/log/postgres.log</string>
     </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do
