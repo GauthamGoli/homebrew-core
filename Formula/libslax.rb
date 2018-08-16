@@ -28,9 +28,15 @@ class Libslax < Formula
   depends_on "curl" if MacOS.version <= :lion
   depends_on "openssl"
 
+  conflicts_with "genometools", :because => "both install `bin/gt`"
+
   def install
     # configure remembers "-lcrypto" but not the link path.
     ENV.append "LDFLAGS", "-L#{Formula["openssl"].opt_lib}"
+
+    if MacOS.version == :sierra || MacOS.version == :el_capitan
+      ENV["SDKROOT"] = MacOS.sdk_path
+    end
 
     system "sh", "./bin/setup.sh" if build.head?
     system "./configure", "--disable-dependency-tracking",

@@ -1,15 +1,15 @@
 class Telegraf < Formula
   desc "Server-level metric gathering agent for InfluxDB"
   homepage "https://influxdata.com"
-  url "https://github.com/influxdata/telegraf/archive/1.5.2.tar.gz"
-  sha256 "8245ad4a8a7ed1453e674017fb7017dbff151a83482f79e82542379dbc1124a5"
+  url "https://github.com/influxdata/telegraf/archive/1.7.3.tar.gz"
+  sha256 "499e6e923a5cd46138cab08cc60f252aa5c3024f91c24ce33bbd9f3733790ec4"
   head "https://github.com/influxdata/telegraf.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "81c78660a35b958fb31685bba865cb60e54c389794d4a9a8f5d744274e4735e7" => :high_sierra
-    sha256 "69766ef618720422617f7ddbded41ec487758014389f2d623b8f7fc5dd266066" => :sierra
-    sha256 "f866e4ac1b63fcf76c4fc56f6d79e6878513e8656a9a572c9875814051d034dc" => :el_capitan
+    sha256 "ad80455c2641c2aefb90b87bad4fbe2b7005ae7099b5224f0a8270d7eed445f3" => :high_sierra
+    sha256 "f8705d51a6fae2a25e3ff42213a3f177f18c735777411892634635624e452420" => :sierra
+    sha256 "4fdccfe8a43d112a5466734358ed6e0793ef1391739f561d9d0a3bfa9fb41bfa" => :el_capitan
   end
 
   depends_on "gdm" => :build
@@ -65,7 +65,7 @@ class Telegraf < Formula
         <string>#{var}/log/telegraf.log</string>
       </dict>
     </plist>
-    EOS
+  EOS
   end
 
   test do

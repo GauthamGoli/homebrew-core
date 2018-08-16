@@ -1,13 +1,13 @@
 class Harfbuzz < Formula
   desc "OpenType text shaping engine"
   homepage "https://wiki.freedesktop.org/www/Software/HarfBuzz/"
-  url "https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.7.5.tar.bz2"
-  sha256 "84574e1b1f65ca694cb8fb6905309665c0368af18a312357f8ff886ee2f29563"
+  url "https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.8.8.tar.bz2"
+  sha256 "a8e5c86e4d99e1cc9865ec1b8e9b05b98e413c2a885cd11f8e9bb9502dd3e3a9"
 
   bottle do
-    sha256 "0a43f2277203cdbab4b0509d483593514bb8cee51dc52d28958e06d4822c85e5" => :high_sierra
-    sha256 "e16c0e72ce780ab1a17d6d8448b957cb4187332554aabf193b7c21a20a565e70" => :sierra
-    sha256 "c2089227532d4471a8e2bdc9e875c6b40a3d0feea1dc02ce63727c85d36fc9b8" => :el_capitan
+    sha256 "c5fb112f729de65d26651207e197c216ab5301a39b41f7a741b81644fb229ba8" => :high_sierra
+    sha256 "fb984dac19bd01b56fa79af410b3a636d2e78951c9fa9e493ad5687846b0ba44" => :sierra
+    sha256 "d1ebe488634cd4ecdf406dd14b93d453a24182cbcc679be31041f8656b4aa7f9" => :el_capitan
   end
 
   head do
@@ -19,15 +19,13 @@ class Harfbuzz < Formula
     depends_on "libtool" => :build
   end
 
-  option "with-cairo", "Build command-line utilities that depend on Cairo"
-
   depends_on "pkg-config" => :build
+  depends_on "gobject-introspection" => :build
   depends_on "freetype" => :recommended
-  depends_on "glib" => :recommended
-  depends_on "gobject-introspection" => :recommended
   depends_on "graphite2" => :recommended
   depends_on "icu4c" => :recommended
-  depends_on "cairo" => :optional
+  depends_on "cairo"
+  depends_on "glib"
 
   resource "ttf" do
     url "https://github.com/behdad/harfbuzz/raw/fc0daafab0336b847ac14682e581a8838f36a0bf/test/shaping/fonts/sha1sum/270b89df543a7e48e206a2d830c0e10e5265c630.ttf"
@@ -40,30 +38,16 @@ class Harfbuzz < Formula
       --prefix=#{prefix}
       --with-coretext=yes
       --enable-static
+      --with-cairo=yes
+      --with-glib=yes
+      --with-gobject=yes
+      --enable-introspection=yes
     ]
-
-    if build.with? "cairo"
-      args << "--with-cairo=yes"
-    else
-      args << "--with-cairo=no"
-    end
 
     if build.with? "freetype"
       args << "--with-freetype=yes"
     else
       args << "--with-freetype=no"
-    end
-
-    if build.with? "glib"
-      args << "--with-glib=yes"
-    else
-      args << "--with-glib=no"
-    end
-
-    if build.with? "gobject-introspection"
-      args << "--with-gobject=yes" << "--enable-introspection=yes"
-    else
-      args << "--with-gobject=no" << "--enable-introspection=no"
     end
 
     if build.with? "graphite2"

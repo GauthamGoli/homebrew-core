@@ -3,21 +3,30 @@ class Go < Formula
   homepage "https://golang.org"
 
   stable do
-    url "https://dl.google.com/go/go1.10.src.tar.gz"
-    mirror "https://fossies.org/linux/misc/go1.10.src.tar.gz"
-    sha256 "f3de49289405fda5fd1483a8fe6bd2fa5469e005fd567df64485c4fa000c7f24"
+    url "https://dl.google.com/go/go1.10.3.src.tar.gz"
+    mirror "https://fossies.org/linux/misc/go1.10.3.src.tar.gz"
+    sha256 "567b1cc66c9704d1c019c50bef946272e911ec6baf244310f87f4e678be155f2"
 
     go_version = version.to_s.split(".")[0..1].join(".")
     resource "gotools" do
       url "https://go.googlesource.com/tools.git",
           :branch => "release-branch.go#{go_version}"
     end
+
+    # Backports the following commit from 1.10/1.11:
+    # https://github.com/golang/go/commit/1a92cdbfc10e0c66f2e015264a39159c055a5c15
+    patch do
+      url "https://github.com/golang/go/commit/1a92cdbfc10e0c66f2e015264a39159c055a5c15.patch?full_index=1"
+      sha256 "9b879e3e759d56093ca7660305c3e4f8aee8acdd87126dc10985360395704139"
+    end
   end
 
   bottle do
-    sha256 "79739d1c83ee38cfeae45e38a75b4caefed5d813504aadfe5a9de8a3eedb1fde" => :high_sierra
-    sha256 "c17cc09f1fe9248f830e7b9dfef30f4855e828d00f991612f18dcac1fda07ed9" => :sierra
-    sha256 "ba59a6ed0c5bb01df3fda5eaa2566c079aaf021518725e7d163889938f33aec7" => :el_capitan
+    rebuild 1
+    sha256 "b3bc4d9180e0cc3c74281be2afbde4312e689ee2c8b33c31d8c9427e6a4fd272" => :mojave
+    sha256 "f4093fe6e5a685528a7baf4a9c84aaeca4978f4f21faaa635d7a3952ab15f9c6" => :high_sierra
+    sha256 "21e43c921f7221923d0740a8952a548e0cbb6b4b43945c7494d57341bcdee33b" => :sierra
+    sha256 "1f1e1e34114c80fe7b74410d7b5337f976c84a3f83171d35b8db1af7f5937b39" => :el_capitan
   end
 
   head do
@@ -80,7 +89,7 @@ class Go < Formula
 
     You may wish to add the GOROOT-based install location to your PATH:
       export PATH=$PATH:#{opt_libexec}/bin
-    EOS
+  EOS
   end
 
   test do

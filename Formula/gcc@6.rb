@@ -4,17 +4,15 @@ class GccAT6 < Formula
   url "https://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.xz"
   mirror "https://ftpmirror.gnu.org/gcc/gcc-6.4.0/gcc-6.4.0.tar.xz"
   sha256 "850bf21eafdfe5cd5f6827148184c08c4a0852a37ccf36ce69855334d2c914d4"
-  revision 1
+  revision 2
 
   bottle do
-    sha256 "7b6293c3e87933e74b691e347168b76d0efd1add5eeff72fef9fb94b1ba71b2e" => :high_sierra
-    sha256 "3f3142f4bb57a075895c8e750d2f5c0f2cfbb7c5d26cc9443e7b187a770b63fc" => :sierra
-    sha256 "6b91a6169c333d8e0b1169c66e1d3111c6eb86dda8f9ad0de3b8e7a46808b9b6" => :el_capitan
+    rebuild 1
+    sha256 "1e33eda2bb05662fe7f061765332f32451d7b9ac0dc70651e94ff5dfd6ef2d07" => :high_sierra
+    sha256 "dfc7cef94a96b5c9e38463ae771726747576b77af63e91c2158d5344c189d681" => :sierra
+    sha256 "929f81db0795b08b4768f667780cff9ef0950990faa7d7215f4498c9752df7cd" => :el_capitan
   end
 
-  # GCC's Go compiler is not currently supported on macOS.
-  # See: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=46986
-  option "with-java", "Build the gcj compiler"
   option "with-all-languages", "Enable all compilers and languages, except Ada"
   option "with-nls", "Build with native language support (localization)"
   option "with-jit", "Build the jit compiler"
@@ -24,7 +22,6 @@ class GccAT6 < Formula
   depends_on "libmpc"
   depends_on "mpfr"
   depends_on "isl"
-  depends_on "ecj" if build.with?("java") || build.with?("all-languages")
 
   fails_with :gcc_4_0
 
@@ -57,6 +54,10 @@ class GccAT6 < Formula
     end
   end
 
+  # isl 0.20 compatibility
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=86724
+  patch :DATA
+
   def install
     # GCC will suffer build errors if forced to use a particular linker.
     ENV.delete "LD"
@@ -65,13 +66,12 @@ class GccAT6 < Formula
       # Everything but Ada, which requires a pre-existing GCC Ada compiler
       # (gnat) to bootstrap. GCC 4.6.0 adds go as a language option, but it is
       # currently only compilable on Linux.
-      languages = %w[c c++ objc obj-c++ fortran java jit]
+      languages = %w[c c++ objc obj-c++ fortran jit]
     else
       # C, C++, ObjC compilers are always built
       languages = %w[c c++ objc obj-c++]
 
       languages << "fortran" if build.with? "fortran"
-      languages << "java" if build.with? "java"
       languages << "jit" if build.with? "jit"
     end
 
@@ -114,10 +114,6 @@ class GccAT6 < Formula
     args << "--with-dwarf2" if MacOS.version <= :mountain_lion
 
     args << "--disable-nls" if build.without? "nls"
-
-    if build.with?("java") || build.with?("all-languages")
-      args << "--with-ecj-jar=#{Formula["ecj"].opt_share}/java/ecj.jar"
-    end
 
     if MacOS.prefer_64_bit?
       args << "--enable-multilib"
@@ -200,3 +196,18 @@ class GccAT6 < Formula
     end
   end
 end
+
+__END__
+diff --git a/gcc/graphite.h b/gcc/graphite.h
+index 578fa1a..e4fad06 100644
+--- a/gcc/graphite.h
++++ b/gcc/graphite.h
+@@ -36,6 +36,8 @@ along with GCC; see the file COPYING3.  If not see
+ #include <isl/ilp.h>
+ #include <isl/schedule.h>
+ #include <isl/ast_build.h>
++#include <isl/id.h>
++#include <isl/space.h>
+
+ #ifdef HAVE_ISL_OPTIONS_SET_SCHEDULE_SERIALIZE_SCCS
+ /* isl 0.15 or later.  */

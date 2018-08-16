@@ -1,19 +1,14 @@
 class Ntp < Formula
   desc "The Network Time Protocol (NTP) Distribution"
   homepage "https://www.eecis.udel.edu/~mills/ntp/html/"
-  url "https://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-4.2.8p10.tar.gz"
-  version "4.2.8p10"
-  sha256 "ddd2366e64219b9efa0f7438e06800d0db394ac5c88e13c17b70d0dcdf99b99f"
+  url "https://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-4.2.8p12.tar.gz"
+  version "4.2.8p12"
+  sha256 "709b222b5013d77d26bfff532b5ea470a8039497ef29d09363931c036cb30454"
 
   bottle do
-    sha256 "5bda263067c4c0fe391c49734680e3f682f8c64672cf0628344db78df6cfa371" => :sierra
-    sha256 "eca0868f7a11c02bd5007602a534257fbdaa06aca5348e32cd06264728569e14" => :el_capitan
-    sha256 "766d2595c081694b7da0e5cfa6818e60483329f5ec7e2f1bf179f180735bbdc2" => :yosemite
-  end
-
-  devel do
-    url "https://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-dev/ntp-dev-4.3.93.tar.gz"
-    sha256 "a07e73d7a3ff139bba33ee4b1110d5f3f4567465505d6317c9b50eefb9720c42"
+    sha256 "d0e19a944a165087388ef43010a9d5407c08a96b461574dedb13b4a0e1a4079b" => :high_sierra
+    sha256 "e177b88d4a9bb828bdae90f935fe138ca59eba94c7aafa1ab13bfc65caf0a82e" => :sierra
+    sha256 "bd59b6a069f159a7a226f12ac254e41702fb992b2c6763adb9af25e659dd18f3" => :el_capitan
   end
 
   option "with-net-snmp", "Build ntpsnmpd, the SNMP MIB agent for ntpd"
@@ -22,8 +17,6 @@ class Ntp < Formula
   depends_on "net-snmp" => :optional
 
   def install
-    system "./bootstrap" if build.head?
-
     args = [
       "--disable-debug",
       "--disable-dependency-tracking",
@@ -39,7 +32,7 @@ class Ntp < Formula
     end
 
     system "./configure", *args
-    system "make", "install"
+    system "make", "install", "LDADD_LIBNTP=-lresolv -undefined dynamic_lookup"
   end
 
   test do

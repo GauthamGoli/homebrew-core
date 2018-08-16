@@ -1,23 +1,23 @@
 class Fribidi < Formula
   desc "Implementation of the Unicode BiDi algorithm"
   homepage "https://github.com/fribidi/fribidi"
-  url "https://github.com/fribidi/fribidi/releases/download/v1.0.1/fribidi-1.0.1.tar.bz2"
-  sha256 "c1b182d70590b6cdb5545bab8149de33b966800f27f2d9365c68917ed5a174e4"
+  url "https://github.com/fribidi/fribidi/releases/download/v1.0.5/fribidi-1.0.5.tar.bz2"
+  sha256 "6a64f2a687f5c4f203a46fa659f43dd43d1f8b845df8d723107e8a7e6158e4ce"
 
   bottle do
     cellar :any
-    sha256 "a4cf0ea06a675c060d157264a85dcb0c378b3b6cb048d529a4c9295b62defae3" => :high_sierra
-    sha256 "d94bcc9e376dc22b291bbb62824dcf1669dd14c0653ef49d98e6458be83e6a99" => :sierra
-    sha256 "705fdec56849cae873d504d6925209cfc4c7802d10de0f48022845b6bec5e8ce" => :el_capitan
+    sha256 "56d5510ea4bc68244be0fd9c4aea28fb237102d436dc53588f82e4f4ed0bb357" => :mojave
+    sha256 "840d79617e028fbf2a65f504a1510a86df4339bbfceaff276038a497e37700d4" => :high_sierra
+    sha256 "3535f072625cf8135abefc6a64e677e31efcc84dfd3340e5e344e3775abd3ccf" => :sierra
+    sha256 "48213fcb9b2f2e126854062a3f21659de1021f22e5c924200ca751f9273332b9" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
-  depends_on "glib"
-  depends_on "pcre"
-
   def install
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--with-glib", "--prefix=#{prefix}"
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--disable-silent-rules",
+                          "--prefix=#{prefix}",
+                          "--enable-static"
     system "make", "install"
   end
 
