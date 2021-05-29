@@ -32,8 +32,9 @@ jobs:
       GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED: 1
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     steps:
-      - uses: GauthamGoli/actions/dispatch-build-bottle@dispatch-build-bottle-composite
-        - with:
+      - id: dispatch-build-bottle
+        uses: GauthamGoli/actions/dispatch-build-bottle@dispatch-build-bottle-composite
+        with:
             formula: ${{github.event.inputs.formula}}
             issue: ${{github.event.inputs.issue}}
             macos: ${{github.event.inputs.macos}}
